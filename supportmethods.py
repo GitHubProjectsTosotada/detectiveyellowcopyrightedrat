@@ -491,7 +491,10 @@ def auto_ranking(bot):
             if rankingtext == None:
                 logging.debug("supportmethods:auto_ranking [!] publishing weekly auto ranking group %s %s" % (g["id"],g["title"]))
                 output = ranking_text(g, lastweek_start, lastweek_end, "week")
-                bot.sendMessage(chat_id=g["id"], text=output, parse_mode=telegram.ParseMode.HTML, disable_web_page_preview=True)
+                try:
+                    bot.sendMessage(chat_id=g["id"], text=output, parse_mode=telegram.ParseMode.HTML, disable_web_page_preview=True)
+                except:
+                    logging.debug("supportmethods:auto_ranking [!] Error sending ranking!")
                 time.sleep(1.0)
         if g["rankingmonth"] > 0:
             logging.debug("supportmethods:auto_ranking testing monthly auto ranking group %s %s" % (g["id"],g["title"]))
@@ -499,7 +502,10 @@ def auto_ranking(bot):
             if rankingtext == None:
                 logging.debug("supportmethods:auto_ranking [!] publishing monthly auto ranking group %s %s" % (g["id"],g["title"]))
                 output = ranking_text(g, lastmonth_start, lastmonth_end, "month")
-                bot.sendMessage(chat_id=g["id"], text=output, parse_mode=telegram.ParseMode.HTML, disable_web_page_preview=True)
+                try:
+                    bot.sendMessage(chat_id=g["id"], text=output, parse_mode=telegram.ParseMode.HTML, disable_web_page_preview=True)
+                except:
+                    logging.debug("supportmethods:auto_ranking [!] Error sending ranking!")
                 time.sleep(1.0)
 
 def ranking_text(group, startdate, enddate, type="week"):
