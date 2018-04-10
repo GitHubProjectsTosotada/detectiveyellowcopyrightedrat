@@ -1558,7 +1558,12 @@ available_languages = {
     "en_US": {
         "name": "English",
         "gettext": gettext.translation("messages", localedir=sys.path[0]+"/locale", languages=["en_US"], fallback=True)
+    },
+    "fr_FR": {
+        "name": "Française (French)",
+        "gettext": gettext.translation("messages", localedir=sys.path[0]+"/locale", languages=["fr_FR"], fallback=True)
     }
+
 }
 
 def set_language(lang):
