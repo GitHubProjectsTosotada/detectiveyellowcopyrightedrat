@@ -324,7 +324,8 @@ function show_section(what, updatedago){
   }
   $(".section").addClass("hide");
   $(".section-" + what).removeClass("hide");
-  $(".section-" + what + " .lastupdate").html(jQuery.timeago(updatedago));
+  if(typeof(updatedago)!="undefined")
+    $(".section-" + what + " .lastupdate").html(jQuery.timeago(updatedago));
 }
 
 function show_error(what){
