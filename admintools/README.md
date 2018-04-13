@@ -6,12 +6,12 @@ This is an optional website directed towards administrators, to gather useful if
 
 Requires Python 3.4+, the main bot dependencies, and some additional Python dependencies.
 
-To install the required Python libraries, just run this from the `admintools` directory:
+To install the additional Python dependencies, just run this from the `admintools` directory:
 
 ```bash
 sudo pip3 install -r requirements.txt
 ```
-Backend is served in port 8044 and frontend in port 8045. A reverse proxy must be configured so the frontend is served in `/` and the data`. [Nginx](http://nginx.org/) is recommended. There is a Nginx configuration file called `nginx-conf` for this.
+Backend is served in port 8044 and frontend in port 8045. A reverse proxy must be configured so the frontend is served in `/` and the backend is served in `data`. [Nginx](http://nginx.org/) is recommended for this. There is an example Nginx configuration file called `nginx-conf` available.
 
 [Cerbot](https://certbot.eff.org/) is recommended to serve the website through HTTPS with a proper certificate.
 
