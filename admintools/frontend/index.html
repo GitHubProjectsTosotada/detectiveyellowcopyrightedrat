@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <title>Detective Yellowcopyrightedrat Admin tools</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  <link rel="stylesheet" href="frontend.css">
+</head>
+<body>
+  <header>
+    <nav class="amber">
+      <div class="nav-wrapper center-align">
+        <a href="/" class="brown-text darken-3-text">DetectivePikaBot Admin tools <span class="brown-text">(beta)</span></a>
+      </div>
+    </nav>
+  </header>
+  <!-- Content -->
+  <main>
+    <div class="container">
+
+      <div class="section section-loading">
+        <div class="row">
+          <div class="col s12 l10 offset-l1">
+            <div class="loader">Loading...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section section-auth hide">
+        <div class="row">
+          <div class="col s12 l10 offset-l1">
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">Telegram Login Information</span>
+                <p>
+                  Enter your phone number to login into Telegram. Don't worry, your phone number won't be stored.
+                </p><p>&nbsp;</p>
+                <div>
+                  <div class="input-field">
+                    <i class="material-icons prefix">phone</i>
+                    <input placeholder="+34600000000" id="telephone" type="text" class="validate">
+                    <label for="tepehone">Phone Number</label>
+                  </div>
+                  <div class="center-align">
+                    <div class="g-recaptcha" data-sitekey="6Ldqf1IUAAAAAMTKipSIha35xwXAZDXCs2InLeG-"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-action center-align">
+                <a href="#" id="loginbutton" class="waves-effect waves-light btn amber darken-1">Log-in Into Telegram »</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section section-code hide">
+        <div class="row">
+          <div class="col s12 l10 offset-l1">
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">Telegram Activation Code</span>
+                <p>
+                  For security reasons, Telegram has sent you an activation code. You must enter the code here to continue.
+                </p><p>&nbsp;</p>
+                <div>
+                  <div class="input-field">
+                    <i class="material-icons prefix">security</i>
+                    <input placeholder="00000" id="code" type="number" class="validate">
+                    <label for="code">Activation Code</label>
+                  </div>
+                </div>
+              </div>
+              <div class="card-action center-align">
+                <a href="#" id="codebutton" class="waves-effect waves-light btn amber darken-1">Continue »</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section section-group hide">
+        <div class="row">
+          <div class="col s12 l10 offset-l1">
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">Choose Group/Channel</span>
+                <p>
+                  Choose the Group/Channel from which you want information. You need to be admin in that group/channel.
+                </p><p>&nbsp;</p>
+                <div class="row">
+                  <div class="col s12">
+                    <div class="input-field">
+                      <i class="material-icons prefix">group</i>
+                      <select id="group">
+                        <option value="" class="default" disabled selected>Choose a group or channel</option>
+                      </select>
+                      <label>Group or channel</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12">
+                    <p class="card-footer">Group list is only reloaded once every 21 hours to avoid overloading the Telegram API.<br/>Last update: <span class="lastupdate"></span></p>
+                  </div>
+                </div>
+              </div>
+              <div class="card-action center-align">
+                <a href="#" id="logoutbutton" class="waves-effect waves-light btn-flat red-text">Logout</a>
+                <a href="#" id="groupbutton" class="waves-effect waves-light btn amber darken-1">Continue »</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section section-actions hide">
+        <div class="row">
+          <div class="col s12 l10 offset-l1">
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">Action for <em class="grouptitle-show"></em></span>
+                <p>
+                  Choose the information you want to fetch. For some options, you can specify a time period.
+                </p><p>&nbsp;</p>
+                <div class="row">
+                  <div class="col s12">
+                    <div class="input-field">
+                      <i class="material-icons prefix">help_outline</i>
+                      <select id="action">
+                        <option value="0" class="default" selected>List not validated users</option>
+                        <option value="1" class="default">List inactive users</option>
+                        <option value="3" class="default">Teams statistics</option>
+                        <option value="4" class="default">List Gyms by activity</option>
+                      </select>
+                      <label>Action</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" style="z-index:990; position:relative;">
+                  <div class="col s12">
+                    <div class="input-field">
+                      <i class="material-icons prefix">access_time</i>
+                      <select id="period">
+                        <option value="4" class="default">Last 4 days</option>
+                        <option value="6" class="default">Last 6 days</option>
+                        <option value="7" class="default" selected>Last 7 days</option>
+                        <option value="14" class="default">Last 14 days</option>
+                        <option value="30" class="default">Last 30 days</option>
+                        <option value="60" class="default">Last 60 days</option>
+                        <option value="90" class="default">Last 90 days</option>
+                      </select>
+                      <label>Time period</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12">
+                    <p class="card-footer">User list on every group is only reloaded once every 21 hours to avoid overloading the Telegram API.<br/>Last update: <span class="lastupdate"></span></p>
+                  </div>
+                </div>
+              </div>
+              <div class="card-action center-align">
+                <a href="#" id="deletegroupbutton" class="waves-effect waves-light btn-flat red-text">« Groups</a>
+                <a href="#" id="actionbutton" class="waves-effect waves-light btn amber darken-1">Continue »</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section section-action-notvalidated hide">
+        <div class="row">
+          <div class="col s12 l10 offset-l1">
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">Not validated users for <em class="grouptitle-show"></em></span>
+                <p>&nbsp;</p>
+                <table class="results-table stripped" id="notvalidated-table">
+                  <tr class="default">
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                  </tr>
+                </table>
+                <div class="row">
+                  <div class="col s12">
+                    <p class="card-footer">Not validated users list is only reloaded once every 21 hours to avoid overloading the Telegram API.<br/>Last update: <span class="lastupdate"></span></p>
+                  </div>
+                </div>
+              </div>
+              <div class="card-action center-align">
+                <a href="#" class="waves-effect waves-light btn-flat red-text anotheractionbutton">« Actions</a>
+                <a href="#" class="exportbutton waves-effect waves-light btn amber darken-1" data-action="notvalidated">Export</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section section-action-inactive hide">
+        <div class="row">
+          <div class="col s12 l10 offset-l1">
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">Inactive users for <em class="grouptitle-show"></em></span>
+                <p>Inactivity is calculated using only raid participation. For participation to be accounted, raids must be not canceled, not deleted, and users can't quit the raid.</p>
+                <p>&nbsp;</p>
+                <table class="results-table stripped" id="inactive-table">
+                  <tr class="default">
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                  </tr>
+                </table>
+                <div class="row">
+                  <div class="col s12">
+                    <p class="card-footer">Every user inactivity list is only reloaded once every 21 hours to avoid overloading the Telegram API.<br/>Last update: <span class="lastupdate"></span></p>
+                  </div>
+                </div>
+              </div>
+              <div class="card-action center-align">
+                <a href="#" class="waves-effect waves-light btn-flat red-text anotheractionbutton">« Actions</a>
+                <a href="#" class="exportbutton waves-effect waves-light btn amber darken-1" data-action="inactive">Export</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section section-action-gyms hide">
+        <div class="row">
+          <div class="col s12 l10 offset-l1">
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">Most active gyms for <em class="grouptitle-show"></em></span>
+                <p>Only non-canceled, non-deleted raids are accounted. People are only accounted once, even if they raid several times on the same gym, and should have pressed «I'm here» at least once. +1s are ignored.</p>
+                <p>&nbsp;</p>
+                <table class="results-table stripped" id="gyms-table">
+                  <tr class="default">
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th class="tooltipped" data-position="top" data-tooltip="Non-canceled raids"># Raids</th>
+                    <th class="tooltipped" data-position="top" data-tooltip="Unique trainers that used the «I'm here» button in non-canceled raids (+1 are ignored)"># People</th>
+                    <th>Tags</th>
+                  </tr>
+                </table>
+                <div class="row">
+                  <div class="col s12">
+                    <p class="card-footer">Every gym activity list is only reloaded once every 21 hours to avoid overloading the Telegram API.<br/>Last update: <span class="lastupdate"></span></p>
+                  </div>
+                </div>
+              </div>
+              <div class="card-action center-align">
+                <a href="#" class="waves-effect waves-light btn-flat red-text anotheractionbutton">« Actions</a>
+                <a href="#" class="exportbutton waves-effect waves-light btn amber darken-1" data-action="inactive">Export</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section section-action-teams hide">
+        <div class="row">
+          <div class="col s12 l10 offset-l1">
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">Teams statistics for <em class="grouptitle-show"></em></span>
+                <p>&nbsp;</p>
+                <table class="results-table stripped hide" id="teams-table">
+                  <tr class="default">
+                    <th>Team</th>
+                    <th>Count</th>
+                  </tr>
+                </table>
+                <div class="row">
+                  <div class="col s12 m8 offset-m2 l6 offset-l3">
+                    <canvas id="teams-chart" width="400" height="400"></canvas>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12">
+                    <p class="card-footer">Team statistics are only reloaded once every 21 hours to avoid overloading the Telegram API.<br/>Last update: <span class="lastupdate"></span></p>
+                  </div>
+                </div>
+              </div>
+              <div class="card-action center-align">
+                <a href="#" class="waves-effect waves-light btn-flat red-text anotheractionbutton">« Actions</a>
+                <a href="#" class="exportbutton waves-effect waves-light btn amber darken-1" data-action="teams">Export</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section section-error hide">
+        <div class="row">
+          <div class="col s12 l10 offset-l1">
+            <div class="card red darken-4">
+              <div class="card-content white-text">
+                <span class="card-title">Error</span>
+                <p class="error-text"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="page-footer amber lighten-4">
+    <div class="container center-align">
+      <p class="black-text">
+        <small>Problems loading content? Try <a href="#" id="startoverlink" class="grey-text text-darken-3">starting over</a>.</small>
+      </p>
+    </div>
+  </footer>
+
+
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+  <script src="https://fastcdn.org/FileSaver.js/1.1.20151003/FileSaver.min.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.3/jquery.timeago.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  <script src="frontend.js"></script>
+</body>
+</html>

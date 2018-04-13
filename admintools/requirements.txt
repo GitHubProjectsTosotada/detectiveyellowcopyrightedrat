@@ -1,0 +1,2 @@
+web.py == 0.40-dev1
+telethon == 0.18.0.3

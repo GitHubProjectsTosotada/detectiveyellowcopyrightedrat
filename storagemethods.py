@@ -641,6 +641,66 @@ def isBanned(user_id):
             db.close()
             return True
 
+def isActiveInGroup(user_id, group_id, days="30"):
+    db = getDbConnection()
+    logging.debug("storagemethods:isActiveInGroup: %s %s %s" % (user_id, group_id, days))
+    with db.cursor() as cursor:
+        sql = "SELECT `voy`.`usuario_id` FROM `grupos` \
+        LEFT JOIN incursiones ON incursiones.grupo_id = grupos.id \
+        RIGHT JOIN voy ON voy.incursion_id = incursiones.id \
+        WHERE grupos.id = %s AND voy.usuario_id = %s \
+        AND voy.novoy = 0 AND incursiones.status IN ('started','ended','old') \
+        AND voy.addedtime>(DATE_SUB(NOW(),INTERVAL " + str(days) + " DAY)) \
+		GROUP BY grupos.id"
+        cursor.execute(sql, (group_id, user_id))
+        result = cursor.fetchone()
+        if result is None:
+            logging.debug("storagemethods:isActiveInGroup: Not active")
+            db.close()
+            return False
+        else:
+            logging.debug("storagemethods:isActiveInGroup: Active")
+            db.close()
+            return True
+
+def getGymsByActivity(group_id, days="30"):
+    db = getDbConnection()
+    logging.debug("storagemethods:getGymsByActivity: %s %s" % (group_id, days))
+    with db.cursor() as cursor:
+        sql = "SELECT gimnasios.id, gimnasios.name, gimnasios.tags, \
+        count(DISTINCT incursiones.id) AS count, count(DISTINCT voy.usuario_id) AS people \
+        FROM gimnasios \
+        LEFT JOIN incursiones ON incursiones.gimnasio_id = gimnasios.id \
+        LEFT JOIN voy ON incursiones.id = voy.incursion_id \
+        WHERE incursiones.grupo_id = %s \
+        AND incursiones.status IN ('started','ended','old') \
+        AND voy.estoy = 1 AND voy.novoy = 0 \
+        AND timeraid > (DATE_SUB(NOW(),INTERVAL " + str(days) + " DAY)) \
+        GROUP by gimnasios.id \
+        ORDER BY count(DISTINCT voy.usuario_id) DESC, count(DISTINCT incursiones.id) DESC \
+        LIMIT 0,30"
+        cursor.execute(sql, (group_id))
+        result = cursor.fetchall()
+    db.close()
+    return result
+
+def existsGroup(group_id):
+    db = getDbConnection()
+    logging.debug("storagemethods:existsGroup: %s" % (group_id))
+    with db.cursor() as cursor:
+        sql = "SELECT `grupos`.`id` FROM `grupos` WHERE grupos.id = %s"
+        cursor.execute(sql, (group_id))
+        result = cursor.fetchone()
+        if result is None:
+            logging.debug("storagemethods:existsGroup: No")
+            db.close()
+            return False
+        else:
+            logging.debug("storagemethods:existsGroup: Yes")
+            db.close()
+            return True
+
+
 def saveRaid(raid):
     db = getDbConnection()
     logging.debug("storagemethods:saveRaid: %s" % (raid))

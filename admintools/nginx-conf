@@ -1,0 +1,19 @@
+server {
+
+  listen 80;
+  server_name YOUR_DOMAIN_HERE;
+  root /var/www/html;
+
+  location /data/ {
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_pass http://localhost:8044/;
+  }
+
+  location / {
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_pass http://localhost:8045/;
+  }
+
+}
