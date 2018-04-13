@@ -751,8 +751,9 @@ def getCurrentPokemons():
         sql = "SELECT count(pokemon) as count, pokemon \
             FROM incursiones \
             LEFT JOIN grupos ON grupos.id = incursiones.grupo_id \
-            WHERE incursiones.addedtime > NOW() - INTERVAL 3 DAY  \
+            WHERE incursiones.addedtime > NOW() - INTERVAL 2 DAY  \
             AND grupos.testgroup = 0 \
+            AND incursiones.status IN ('started', 'waiting', 'ended', 'old') \
             AND pokemon != 'Pikachu' AND pokemon != 'Mewtwo' \
             AND pokemon != 'Pidgey' AND pokemon != 'Mew' AND pokemon != 'Celebi' \
             GROUP BY pokemon \
