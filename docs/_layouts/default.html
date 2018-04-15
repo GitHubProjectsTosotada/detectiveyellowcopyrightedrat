@@ -15,6 +15,19 @@
       .language-selector p{ margin:0; padding:1em; text-align:center; }
       .language-selector p a{ margin:0; }
       .language-selector p a.current { color:#fff; background:#666; }
+      @media screen and (max-width:42em){
+        .btn{
+          display: inline-block !important;
+          width: calc(50% - 0.75rem) !important;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          line-height:1;
+        }
+        .btn + .btn{
+          margin-top:0 !important;
+        }
+      }
     </style>
     <section class="language-selector">
       <p>
