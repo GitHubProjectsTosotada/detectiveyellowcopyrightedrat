@@ -19,6 +19,14 @@ $(function() {
     testLogin();
   });
 
+  // Pressed the code button
+  $("#passwordbutton").on("click", function(){
+    localStorage.setItem('password', $("#password").val());
+    $("#password").val("");
+    loading();
+    testLogin();
+  });
+
   // Pressed group button
   $("#groupbutton").on("click", function(){
     localStorage.setItem('groupid', $("#group").val());
@@ -214,6 +222,7 @@ function testLogin(){
   data = {
     "telephone": localStorage.getItem("telephone"),
     "code": localStorage.getItem("code"),
+    "password": localStorage.getItem("password"),
     "g-recaptcha-response": $("#g-recaptcha-response").val()
   };
   if(data.telephone==null){
@@ -236,6 +245,9 @@ function testLogin(){
         else if(response == "checkphone"){
           show_section("code");
         }
+        else if(response == "needpassword"){
+          show_section("password");
+        }
         else if(response == "badphone"){
           localStorage.removeItem('telephone');
           localStorage.removeItem('code');
@@ -253,6 +265,14 @@ function testLogin(){
           localStorage.removeItem('code');
           window.alert("Sorry mate, recaptcha is invalid");
           show_section("auth");
+        }
+        else if(response == "badcode"){
+          window.alert("Invalid code entered. Please enter a valid code to continue!");
+          show_section("code");
+        }
+        else if(response == "badpassword"){
+          window.alert("Invalid password entered. Please enter your password to continue!");
+          show_section("password");
         }
         else if(response == "pleasecooldown"){
           show_error("Too much requests from you! Please try again after some hours.");

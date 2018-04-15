@@ -6,6 +6,11 @@ from telethon.tl.functions.channels import GetParticipantsRequest
 from telethon.tl.functions.messages import GetDialogsRequest
 from telethon.tl.types import ChannelParticipantsSearch, Updates, UpdateShortMessage, UpdateNewMessage, InputPeerEmpty, Chat, Channel, InputChannel, InputFileLocation, ChannelParticipantsAdmins
 from telethon.utils import get_input_media
+from telethon.errors.rpc_error_list import SessionPasswordNeededError, PhoneCodeInvalidError
+
+
+
+
 
 import logging
 import json
@@ -92,12 +97,28 @@ class auth:
                     except:
                         return "cantsendcode"
                 else:
-                    client.sign_in(data['telephone'][0], data["code"][0], phone_code_hash=session.codehash)
-                    if client.is_user_authorized():
-                        session.client_id = str(client.get_me().id)
-                        return "ok_signedin"
+                    if "password" in data:
+                        try:
+                            client.sign_in(phone_code_hash=session.codehash, password=data["password"][0])
+                        except SessionPasswordNeededError:
+                            return "badpassword"
+                        if client.is_user_authorized():
+                            session.client_id = str(client.get_me().id)
+                            return "ok_signedin"
+                        else:
+                            return "badpassword"
                     else:
-                        return "badcode"
+                        try:
+                            client.sign_in(data['telephone'][0], data["code"][0], phone_code_hash=session.codehash)
+                        except SessionPasswordNeededError:
+                            return "needpassword"
+                        except PhoneCodeInvalidError:
+                            return "badcode"
+                        if client.is_user_authorized():
+                            session.client_id = str(client.get_me().id)
+                            return "ok_signedin"
+                        else:
+                            return "badcode"
             else:
                 session.client_id = str(client.get_me().id)
                 return "ok_alreadyauthorized"
