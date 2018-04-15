@@ -11,7 +11,7 @@ To install the additional Python dependencies, just run this from the `admintool
 ```bash
 sudo pip3 install -r requirements.txt
 ```
-Backend is served in port 8044 and frontend in port 8045. A reverse proxy must be configured so the frontend is served in `/` and the backend is served in `data`. [Nginx](http://nginx.org/) is recommended for this. There is an example Nginx configuration file called `nginx-conf` available.
+Backend is served in port 8044 and frontend in port 8045. A reverse proxy must be configured so the frontend is served in `/` and the backend is served in `/data/`. [Nginx](http://nginx.org/) is recommended for this. There is an example Nginx configuration file called `nginx-conf` available.
 
 [Cerbot](https://certbot.eff.org/) is recommended to serve the website through HTTPS with a proper certificate.
 
@@ -29,7 +29,7 @@ recaptchasecret=xXXXXXXXXXXXXXXXXXXXXXXXXXXx-xXXXXXXXXXXXX
 Get the `apiid` and `apihash` from Telegram [following these instructions](https://core.telegram.org/api/obtaining_api_id#obtaining-api-id).
 
 Obtain a recaptcha v2 secret [from the reCAPTCHA admin site](https://core.telegram.org/api/obtaining_api_id#obtaining-api-id).
-Also, set the proper site key in the file `frontend/inde.html`. Look for `data-sitekey` to find it.
+Also, set the proper site key in the file `frontend/index.html`. Look for `data-sitekey` to find it.
 
 ## License
 
