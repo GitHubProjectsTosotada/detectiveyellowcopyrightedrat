@@ -823,12 +823,12 @@ def get_gyms_keyboard(group_id, page=0, zone=None, order="activity", langfunc=No
         keyboard.append(keyboard_row)
 
     if len(current_gyms)>14 and int(page) == 0:
-        keyboard.append([InlineKeyboardButton("Página 2 >", callback_data="iraid_gyms_page2"), InlineKeyboardButton(_("Cancelar"), callback_data="iraid_cancel")])
+        keyboard.append([InlineKeyboardButton(_("Página 2 >"), callback_data="iraid_gyms_page2"), InlineKeyboardButton(_("Cancelar"), callback_data="iraid_cancel")])
     elif int(page) > 0:
-        if len(current_gyms) > 14*(int(page)+1)+1:
-            keyboard.append([InlineKeyboardButton("< Pág.%s" % str(page), callback_data="iraid_gyms_page%s" % str(page)), InlineKeyboardButton("Pág.%s >" % str(int(page)+2), callback_data="iraid_gyms_page%s" % str(int(page)+2)), InlineKeyboardButton(_("Cancelar"), callback_data="iraid_cancel")])
+        if len(current_gyms) > 14*(int(page)+1):
+            keyboard.append([InlineKeyboardButton(_("< Pág.{0}").format(str(page)), callback_data="iraid_gyms_page%s" % str(page)), InlineKeyboardButton(_("Pág.{0} >").format(str(int(page)+2)), callback_data="iraid_gyms_page%s" % str(int(page)+2)), InlineKeyboardButton(_("Cancelar"), callback_data="iraid_cancel")])
         else:
-            keyboard.append([InlineKeyboardButton("< Página %s" % str(page), callback_data="iraid_gyms_page%s" % str(page)), InlineKeyboardButton(_("Cancelar"), callback_data="iraid_cancel")])
+            keyboard.append([InlineKeyboardButton(_("< Página {0}").format(str(page)), callback_data="iraid_gyms_page%s" % str(page)), InlineKeyboardButton(_("Cancelar"), callback_data="iraid_cancel")])
     else:
         keyboard.append([InlineKeyboardButton(_("Cancelar"), callback_data="iraid_cancel")])
     reply_markup = InlineKeyboardMarkup(keyboard)
