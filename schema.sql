@@ -47,6 +47,7 @@ CREATE TABLE `grupos` (
   `raidcommandorder` TINYINT NOT NULL DEFAULT '1',
   `talkgroup` VARCHAR(60) NULL DEFAULT NULL,
   `babysitter` TINYINT NOT NULL DEFAULT '0',
+  `permissive` TINYINT NOT NULL DEFAULT '0',
   `timeformat` TINYINT NOT NULL DEFAULT '0',
   `icontheme` TINYINT NOT NULL DEFAULT '0',
   `listorder` TINYINT NOT NULL DEFAULT '0',

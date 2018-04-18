@@ -766,6 +766,10 @@ def get_settings_keyboard(chat_id, keyboard="main", langfunc=None):
         rankingauto_text = "✅ " + _("Publicar automáticamente")
     else:
         rankingauto_text = "▪️ " + _("Publicar automáticamente")
+    if group["permissive"] == 1:
+        permissive_text = "✅ " + _("Edición permisiva")
+    else:
+        permissive_text = "▪️ " + _("Edición permisiva")
     icons = iconthemes[group["icontheme"]]
     icontheme_text = "{0}{1}{2} ".format(icons["Rojo"],icons["Azul"],icons["Amarillo"]) + _("Tema de iconos")
 
@@ -776,7 +780,7 @@ def get_settings_keyboard(chat_id, keyboard="main", langfunc=None):
     elif keyboard == "commands":
         settings_keyboard = [[InlineKeyboardButton(gymcommand_text, callback_data='settings_gymcommand')], [InlineKeyboardButton(raidcommand_text, callback_data='settings_raidcommand')], [InlineKeyboardButton(refloat_text, callback_data='settings_reflotar')], [InlineKeyboardButton(candelete_text, callback_data='settings_borrar')], [InlineKeyboardButton(_("« Menú principal"), callback_data='settings_goto_main')]]
     elif keyboard == "raidbehaviour":
-        settings_keyboard = [[InlineKeyboardButton(latebutton_text, callback_data='settings_botonllegotarde')], [InlineKeyboardButton(gotitbuttons_text, callback_data='settings_lotengo')], [InlineKeyboardButton(plusmax_text, callback_data='settings_plusmax')], [InlineKeyboardButton(plusdisaggregated_text, callback_data='settings_plusdisaggregated')], [InlineKeyboardButton(_("« Menú principal"), callback_data='settings_goto_main')]]
+        settings_keyboard = [[InlineKeyboardButton(latebutton_text, callback_data='settings_botonllegotarde')], [InlineKeyboardButton(gotitbuttons_text, callback_data='settings_lotengo')], [InlineKeyboardButton(plusmax_text, callback_data='settings_plusmax')], [InlineKeyboardButton(plusdisaggregated_text, callback_data='settings_plusdisaggregated')], [InlineKeyboardButton(permissive_text, callback_data='settings_permissive')], [InlineKeyboardButton(_("« Menú principal"), callback_data='settings_goto_main')]]
     elif keyboard == "raids":
         settings_keyboard = [[InlineKeyboardButton(disaggregated_text, callback_data='settings_desagregado')], [InlineKeyboardButton(plusdisaggregatedinline_text, callback_data='settings_plusdisaggregatedinline')], [InlineKeyboardButton(timeformat_text, callback_data='settings_timeformat')], [InlineKeyboardButton(icontheme_text, callback_data='settings_icontheme')], [InlineKeyboardButton(listorder_text, callback_data='settings_listorder')], [InlineKeyboardButton(raidcommandorder_text, callback_data='settings_raidcommandorder')], [InlineKeyboardButton(snail_text, callback_data='settings_snail')], [InlineKeyboardButton(_("« Menú principal"), callback_data='settings_goto_main')]]
     elif keyboard == "ranking":

@@ -53,7 +53,7 @@ import html
 import gettext
 
 from config import config
-from storagemethods import saveGroup, savePlaces, savePlace, getGroup, getPlaces, saveUser, saveWholeUser, getUser, isBanned, refreshUsername, saveRaid, getRaid, raidVoy, raidPlus1, raidEstoy, raidNovoy, raidLlegotarde, getCreadorRaid, getRaidbyMessage, getPlace, deleteRaid, getRaidPeople, closeRaid, cancelRaid, uncancelRaid, getLastRaids, raidLotengo, raidEscapou, searchTimezone, getActiveRaidsforUser, getGrupoRaid, getCurrentValidation, saveValidation, getUserByTrainername, getActiveRaidsforGroup, getGroupsByUser, getGroupUserStats, getRanking, getRemovedAlerts, getCurrentGyms, getCachedRanking, saveCachedRanking, resetCachedRanking
+from storagemethods import saveGroup, savePlaces, savePlace, getGroup, getPlaces, saveUser, saveWholeUser, getUser, isBanned, refreshUsername, saveRaid, getRaid, raidVoy, raidPlus1, raidEstoy, raidNovoy, raidLlegotarde, getCreadorRaid, getRaidbyMessage, getPlace, deleteRaid, getRaidPeople, closeRaid, cancelRaid, uncancelRaid, getLastRaids, raidLotengo, raidEscapou, searchTimezone, getActiveRaidsforUser, getGrupoRaid, getCurrentValidation, saveValidation, getUserByTrainername, getActiveRaidsforGroup, getGroupsByUser, getGroupUserStats, getRanking, getRemovedAlerts, getCurrentGyms, getCachedRanking, saveCachedRanking, resetCachedRanking, isParticipatingRaid
 from supportmethods import is_admin, extract_update_info, delete_message_timed, send_message_timed, pokemonlist, egglist, iconthemes, update_message, update_raids_status, send_alerts, send_alerts_delayed, error_callback, ensure_escaped, warn_people, get_settings_keyboard, update_settings_message, update_settings_message_timed, get_keyboard, format_message, edit_check_private, edit_check_private_or_reply, delete_message, parse_time, parse_pokemon, extract_time, extract_day, format_text_day, format_text_pokemon, parse_profile_image, validation_pokemons, validation_names, update_validations_status, already_sent_location, auto_refloat, format_gym_emojis, fetch_gym_address, get_pokemons_keyboard, get_gyms_keyboard, get_zones_keyboard, get_times_keyboard, get_endtimes_keyboard, get_days_keyboard, format_text_creating, remove_incomplete_raids, send_edit_instructions, ranking_time_periods, auto_ranking, ranking_text, set_language, available_languages
 from alerts import alertscmd, addalertcmd, clearalertscmd, delalertcmd, processLocation
 
@@ -1518,7 +1518,8 @@ def timecmd(bot, update, args=None):
     else:
         _ = set_language(group["language"])
     if raid is not None:
-        if chat_type == "channel" or raid["usuario_id"] == user_id or is_admin(raid["grupo_id"], user_id, bot):
+        if chat_type == "channel" or raid["usuario_id"] == user_id or is_admin(raid["grupo_id"], user_id, bot) or \
+        (group["permissive"] == 1 and isParticipatingRaid(user_id, raid["id"])):
             if raid["status"] == "old":
                 user_id = chat_id if user_id is None else user_id
                 bot.sendMessage(chat_id=user_id, text=_("❌ No se puede editar la incursión `{0}` porque ya ha terminado.").format(raid["id"]), parse_mode=telegram.ParseMode.MARKDOWN)
@@ -1591,7 +1592,8 @@ def endtimecmd(bot, update, args=None):
     else:
         _ = set_language(group["language"])
     if raid is not None:
-        if chat_type == "channel" or raid["usuario_id"] == user_id or is_admin(raid["grupo_id"], user_id, bot):
+        if chat_type == "channel" or raid["usuario_id"] == user_id or is_admin(raid["grupo_id"], user_id, bot) or \
+        (group["permissive"] == 1 and isParticipatingRaid(user_id, raid["id"])):
             if raid["status"] == "old":
                 user_id = chat_id if user_id is None else user_id
                 bot.sendMessage(chat_id=user_id, text=_("❌ No se puede editar la incursión `{0}` porque ya ha terminado.").format(raid["id"]), parse_mode=telegram.ParseMode.MARKDOWN)
@@ -1679,7 +1681,8 @@ def gymcmd(bot, update, args=None):
     else:
         _ = set_language(group["language"])
     if raid is not None:
-        if chat_type == "channel" or raid["usuario_id"] == user_id or is_admin(raid["grupo_id"], user_id, bot):
+        if chat_type == "channel" or raid["usuario_id"] == user_id or is_admin(raid["grupo_id"], user_id, bot) or \
+        (group["permissive"] == 1 and isParticipatingRaid(user_id, raid["id"])):
             if raid["status"] == "old":
                 user_id = chat_id if user_id is None else user_id
                 bot.sendMessage(chat_id=user_id, text=_("❌ No se puede editar la incursión `{0}` porque ya ha terminado.").format(raid["id"]), parse_mode=telegram.ParseMode.MARKDOWN)
@@ -1884,7 +1887,8 @@ def pokemoncmd(bot, update, args=None):
 
     numarg = 1 if chat_type == "private" else 0
     if raid is not None:
-        if chat_type == "channel" or raid["usuario_id"] == user_id or is_admin(raid["grupo_id"], user_id, bot):
+        if chat_type == "channel" or raid["usuario_id"] == user_id or is_admin(raid["grupo_id"], user_id, bot) or \
+        (group["permissive"] == 1 and isParticipatingRaid(user_id, raid["id"])):
             if raid["status"] == "old":
                 user_id = chat_id if user_id is None else user_id
                 bot.sendMessage(chat_id=user_id, text=_("❌ No se puede editar la incursión `{0}` porque ya ha terminado.").format(raid["id"]), parse_mode=telegram.ParseMode.MARKDOWN)
@@ -2242,9 +2246,9 @@ def raidbutton(bot, update):
         else:
             delete_message(chat_id, message_id, bot)
 
-    settings = {"settings_alertas":"alerts", "settings_desagregado":"disaggregated", "settings_botonllegotarde":"latebutton", "settings_reflotar": "refloat", "settings_lotengo": "gotitbuttons", "settings_borrar":"candelete", "settings_locations":"locations", "settings_raidcommand":"raidcommand", "settings_gymcommand":"gymcommand", "settings_babysitter":"babysitter", "settings_timeformat":"timeformat", "settings_validationrequired":"validationrequired", "settings_listorder":"listorder", "settings_plusdisaggregated":"plusdisaggregated", "settings_plusdisaggregatedinline":"plusdisaggregatedinline", "settings_raidcommandorder":"raidcommandorder", "settings_rankingauto":"rankingauto"}
+    settings = {"settings_alertas":"alerts", "settings_desagregado":"disaggregated", "settings_botonllegotarde":"latebutton", "settings_reflotar": "refloat", "settings_lotengo": "gotitbuttons", "settings_borrar":"candelete", "settings_locations":"locations", "settings_raidcommand":"raidcommand", "settings_gymcommand":"gymcommand", "settings_babysitter":"babysitter", "settings_timeformat":"timeformat", "settings_validationrequired":"validationrequired", "settings_listorder":"listorder", "settings_plusdisaggregated":"plusdisaggregated", "settings_plusdisaggregatedinline":"plusdisaggregatedinline", "settings_raidcommandorder":"raidcommandorder", "settings_rankingauto":"rankingauto", "settings_permissive":"permissive"}
 
-    settings_categories = {"settings_alertas":"behaviour", "settings_desagregado":"raids", "settings_botonllegotarde":"raidbehaviour", "settings_reflotar": "commands", "settings_lotengo": "raidbehaviour", "settings_borrar":"commands", "settings_locations":"behaviour", "settings_raidcommand":"commands", "settings_gymcommand":"commands", "settings_babysitter":"behaviour", "settings_timeformat":"raids", "settings_validationrequired":"behaviour", "settings_icontheme":"raids", "settings_plusmax":"raidbehaviour", "settings_refloatauto":"behaviour", "settings_listorder":"raids", "settings_snail":"raids", "settings_plusdisaggregated":"raidbehaviour", "settings_plusdisaggregatedinline":"raids", "settings_raidcommandorder":"raids", "settings_rankingweek":"ranking", "settings_rankingmonth":"ranking", "settings_rankingauto":"ranking"}
+    settings_categories = {"settings_alertas":"behaviour", "settings_desagregado":"raids", "settings_botonllegotarde":"raidbehaviour", "settings_reflotar": "commands", "settings_lotengo": "raidbehaviour", "settings_borrar":"commands", "settings_locations":"behaviour", "settings_raidcommand":"commands", "settings_gymcommand":"commands", "settings_babysitter":"behaviour", "settings_timeformat":"raids", "settings_validationrequired":"behaviour", "settings_icontheme":"raids", "settings_plusmax":"raidbehaviour", "settings_refloatauto":"behaviour", "settings_listorder":"raids", "settings_snail":"raids", "settings_plusdisaggregated":"raidbehaviour", "settings_plusdisaggregatedinline":"raids", "settings_raidcommandorder":"raids", "settings_rankingweek":"ranking", "settings_rankingmonth":"ranking", "settings_rankingauto":"ranking", "settings_permissive":"raidbehaviour"}
 
     for k in settings:
         if data==k:
@@ -2271,6 +2275,8 @@ def raidbutton(bot, update):
                     elif k == "settings_plusdisaggregated" and group["plusmax"] == 0:
                         group["plusmax"] = 5
                         bot.answerCallbackQuery(text=_("Al activar los botones +1 por cada equipo, se ha activado también automáticamente el botón «+1» con un máximo por defecto de 5 acompañantes."), callback_query_id=update.callback_query.id, show_alert="true")
+                    elif k == "settings_permissive":
+                        bot.answerCallbackQuery(text=_("La edición permisiva permite a cualquier entrenador apuntado modificar parámetros de la incursión como la hora o el gimnasio.\n\nOpción solo recomendada para grupos reducidos."), callback_query_id=update.callback_query.id, show_alert="true")
                 saveGroup(group)
                 update_settings_message(chat_id, bot, settings_categories[k])
 
