@@ -607,22 +607,23 @@ def getUser(user_id, reconnect=True):
     db.close()
     return result
 
-def getUserByTrainername(trainername, reconnect=True):
+def getUserByTrainername(trainername):
     db = getDbConnection()
     logging.debug("storagemethods:getUserByTrainername: %s" % (trainername))
     with db.cursor() as cursor:
         sql = "SELECT `id`,`level`,`team`,`username`,`banned`,`validation`,`trainername`,`language` FROM `usuarios` WHERE `trainername`=%s"
-        try:
-            cursor.execute(sql, (trainername))
-            result = cursor.fetchone()
-        except:
-            if reconnect:
-                logging.info("storagemethods:getUser Error interfacing with the database! Trying to reconnect...")
-                getDbConnection()
-                result = getUserByTrainername(trainername, False)
-            else:
-                logging.info("storagemethods:getUser Error interfacing with the database but already tried to reconnect!")
-                raise
+        cursor.execute(sql, (trainername))
+        result = cursor.fetchone()
+    db.close()
+    return result
+
+def getUserByUsername(username):
+    db = getDbConnection()
+    logging.debug("storagemethods:getUserByUsername: %s" % (username))
+    with db.cursor() as cursor:
+        sql = "SELECT `id`,`level`,`team`,`username`,`banned`,`validation`,`trainername`,`language` FROM `usuarios` WHERE `username`=%s"
+        cursor.execute(sql, (username))
+        result = cursor.fetchone()
     db.close()
     return result
 
@@ -925,7 +926,7 @@ def raidVoy(grupo_id, message_id, user_id):
     else:
         return "no_changes"
 
-def raidNovoy(grupo_id, message_id, user_id):
+def raidNovoy(grupo_id, message_id, user_id, adminEnforced = False):
     db = getDbConnection()
     logging.debug("storagemethods:raidNovoy: %s %s %s" % (grupo_id, message_id, user_id))
     with db.cursor() as cursor:
@@ -933,13 +934,14 @@ def raidNovoy(grupo_id, message_id, user_id):
         if raid is None:
             db.close()
             return "not_raid"
-        if raid["status"] == "ended" or raid["status"] == "old":
+        if adminEnforced is False and (raid["status"] == "ended" or raid["status"] == "old"):
             db.close()
             return "old_raid"
-        sql = "SELECT * FROM voy WHERE `incursion_id`=%s and usuario_id=%s and addedtime < timestamp(DATE_SUB(NOW(), INTERVAL 5 MINUTE));"
-        cursor.execute(sql, (raid["id"], user_id))
-        result = cursor.fetchone()
-        if result is None:
+        if adminEnforced is False:
+            sql = "SELECT * FROM voy WHERE `incursion_id`=%s and usuario_id=%s and addedtime < timestamp(DATE_SUB(NOW(), INTERVAL 5 MINUTE));"
+            cursor.execute(sql, (raid["id"], user_id))
+            result = cursor.fetchone()
+        if adminEnforced is True or result is None:
             sql = "DELETE FROM voy WHERE `incursion_id`=%s and usuario_id=%s;"
             rows_affected = cursor.execute(sql, (raid["id"], user_id))
         else:

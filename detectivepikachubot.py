@@ -53,7 +53,7 @@ import html
 import gettext
 
 from config import config
-from storagemethods import saveGroup, savePlaces, savePlace, getGroup, getPlaces, saveUser, saveWholeUser, getUser, isBanned, refreshUsername, saveRaid, getRaid, raidVoy, raidPlus1, raidEstoy, raidNovoy, raidLlegotarde, getCreadorRaid, getRaidbyMessage, getPlace, deleteRaid, getRaidPeople, closeRaid, cancelRaid, uncancelRaid, getLastRaids, raidLotengo, raidEscapou, searchTimezone, getActiveRaidsforUser, getGrupoRaid, getCurrentValidation, saveValidation, getUserByTrainername, getActiveRaidsforGroup, getGroupsByUser, getGroupUserStats, getRanking, getRemovedAlerts, getCurrentGyms, getCachedRanking, saveCachedRanking, resetCachedRanking, isParticipatingRaid
+from storagemethods import saveGroup, savePlaces, savePlace, getGroup, getPlaces, saveUser, saveWholeUser, getUser, isBanned, refreshUsername, saveRaid, getRaid, raidVoy, raidPlus1, raidEstoy, raidNovoy, raidLlegotarde, getCreadorRaid, getRaidbyMessage, getPlace, deleteRaid, getRaidPeople, closeRaid, cancelRaid, uncancelRaid, getLastRaids, raidLotengo, raidEscapou, searchTimezone, getActiveRaidsforUser, getGrupoRaid, getCurrentValidation, saveValidation, getUserByTrainername, getUserByUsername, getActiveRaidsforGroup, getGroupsByUser, getGroupUserStats, getRanking, getRemovedAlerts, getCurrentGyms, getCachedRanking, saveCachedRanking, resetCachedRanking, isParticipatingRaid
 from supportmethods import is_admin, extract_update_info, delete_message_timed, send_message_timed, pokemonlist, egglist, iconthemes, update_message, update_raids_status, send_alerts, send_alerts_delayed, error_callback, ensure_escaped, warn_people, get_settings_keyboard, update_settings_message, update_settings_message_timed, get_keyboard, format_message, edit_check_private, edit_check_private_or_reply, delete_message, parse_time, parse_pokemon, extract_time, extract_day, format_text_day, format_text_pokemon, parse_profile_image, validation_pokemons, validation_names, update_validations_status, already_sent_location, auto_refloat, format_gym_emojis, fetch_gym_address, get_pokemons_keyboard, get_gyms_keyboard, get_zones_keyboard, get_times_keyboard, get_endtimes_keyboard, get_days_keyboard, format_text_creating, remove_incomplete_raids, send_edit_instructions, ranking_time_periods, auto_ranking, ranking_text, set_language, available_languages
 from alerts import alertscmd, addalertcmd, clearalertscmd, delalertcmd, processLocation
 
@@ -671,6 +671,8 @@ def channelCommands(bot, update):
             deletecmd(bot, update, args)
         elif command in ["cancelar","cancel"]:
             cancelcmd(bot, update, args)
+        elif command in ["unlist"]:
+            unlistcmd(bot, update, args)
         elif command in ["reflotar","refloat"]:
             refloatcmd(bot, update, args)
         elif command in ["reflotartodo","reflotartodas","refloatall"]:
@@ -1489,6 +1491,70 @@ def deletecmd(bot, update, args=None):
                 bot.sendMessage(chat_id=user_id, text=_("❌ No se puede borrar la incursión `{0}` porque ya ha terminado.").format(raid["id"]), parse_mode=telegram.ParseMode.MARKDOWN)
         else:
             bot.sendMessage(chat_id=user_id, text=_("❌ No tienes permiso para borrar la incursión `{0}`.").format(raid["id"]), parse_mode=telegram.ParseMode.MARKDOWN)
+
+@run_async
+def unlistcmd(bot, update, args=None):
+    logging.debug("detectivepikachubot:unlistcmd: %s %s" % (bot, update))
+    (chat_id, chat_type, user_id, text, message) = extract_update_info(update)
+
+    if isBanned(chat_id):
+        return
+
+    if chat_type != "channel":
+        user_username = message.from_user.username
+        if isBanned(user_id):
+            return
+        thisuser = refreshUsername(user_id, user_username)
+    else:
+        user_username = None
+        thisuser = None
+
+    raid = edit_check_private_or_reply(chat_id, chat_type, message, args, user_username, "unlist", bot)
+    if raid is None:
+        return
+
+    group = getGroup(chat_id)
+    if thisuser is not None:
+        _ = set_language(thisuser["language"])
+    else:
+        _ = set_language(group["language"])
+
+    numarg = 1 if chat_type == "private" else 0
+    if raid is not None:
+        if chat_type == "channel" or is_admin(raid["grupo_id"], user_id, bot):
+            if raid["status"] == "cancelled":
+                user_id = chat_id if user_id is None else user_id
+                bot.sendMessage(chat_id=user_id, text=_("❌ No se pueden eliminar entrenadores de la incursión `{0}` porque ha sido cancelada.").format(raid["id"]), parse_mode=telegram.ParseMode.MARKDOWN)
+                return
+            if raid["status"] == "deleted":
+                user_id = chat_id if user_id is None else user_id
+                bot.sendMessage(chat_id=user_id, text=_("❌ No se pueden eliminar entrenadores de la incursión `{0}` porque ha sido borrada.").format(raid["id"]), parse_mode=telegram.ParseMode.MARKDOWN)
+                return
+
+            name = args[numarg]
+            if re.match("@",name) is not None:
+                trainer = getUserByUsername(name[1:])
+            else:
+                trainer = getUserByTrainername(name)
+
+            if trainer is None or not isParticipatingRaid(trainer["id"], raid["id"]):
+                user_id = chat_id if user_id is None else user_id
+                bot.sendMessage(chat_id=user_id, text=_("❌ No se ha podido eliminar el entrenador `{0}` de la incursión `{1}` porque no está apuntado.").format(name, raid["id"]), parse_mode=telegram.ParseMode.MARKDOWN)
+                return
+
+            result = raidNovoy(chat_id, raid["message"], trainer["id"], adminEnforced=True)
+            if result == "no_changes":
+                user_id = chat_id if user_id is None else user_id
+                bot.sendMessage(chat_id=user_id, text=_("❌ No se ha podido eliminar el entrenador `{0}` de la incursión `{1}` porque no está apuntado.").format(name, raid["id"]), parse_mode=telegram.ParseMode.MARKDOWN)
+                return
+            elif result is True:
+                reply_markup = get_keyboard(raid)
+                update_message(raid["grupo_id"], raid["message"], reply_markup, bot)
+                if user_id is not None:
+                    bot.sendMessage(chat_id=user_id, text=_("👌 ¡Se ha eliminado al entrenador `{0}` de la incursión `{1}` correctamente!").format(name, raid["id"]), parse_mode=telegram.ParseMode.MARKDOWN)
+        else:
+            bot.sendMessage(chat_id=user_id, text=_("❌ No tienes permiso para eliminar entrenadores de la incursión `{0}`.").format(raid["id"]), parse_mode=telegram.ParseMode.MARKDOWN)
+
 
 @run_async
 def timecmd(bot, update, args=None):
@@ -2419,6 +2485,7 @@ dispatcher.add_handler(CommandHandler(['cambiarhorafin','horafin','endtime'], en
 dispatcher.add_handler(CommandHandler(['cambiargimnasio','gimnasio','gym'], gymcmd, pass_args=True))
 dispatcher.add_handler(CommandHandler(['cambiarpokemon','pokemon'], pokemoncmd, pass_args=True))
 dispatcher.add_handler(CommandHandler(['borrar','delete','remove'], deletecmd, pass_args=True))
+dispatcher.add_handler(CommandHandler(['unlist'], unlistcmd, pass_args=True))
 dispatcher.add_handler(CommandHandler(['reflotar','refloat'], refloatcmd, pass_args=True))
 dispatcher.add_handler(CommandHandler(['reflotartodo','reflotartodas','refloatall'], refloatallcmd, pass_args=True))
 dispatcher.add_handler(CommandHandler(['reflotaractivo','reflotaractivas','refloatactive'], refloatactivecmd, pass_args=True))

@@ -375,6 +375,8 @@ Para revertir la cancelación de una incursión puedes usar el comando `/uncance
 
 Un administrador siempre puede cancelar incursiones con el comando `/cancel`, aunque sean antiguas. Normalmente, un creador de incursión solo puede cancelar incursiones que no sean más antiguas de tres horas.
 
+Para eliminar entrenadores de incursiones de forma selectiva, se puede utilizar `/unlist` seguido del nombre del entrenador. Este comando se utiliza como todos los de la familia de edición: o bien contestando a la incursión, o bien por privado especificando el identificador de la incursión y el nombre del entrenador deseado por ese orden.
+
 Para reflotar todas las incursiones activas una vez, sin necesidad de usar el reflotado automático, se puede usar el comando `/refloatactive`. También se pueden reflotar todas las incursiones, incluídas las EX que transcurrirán dentro de varias horas o días, con `/refloatall`.
 
 # Política de tramposos #

@@ -383,6 +383,8 @@ Este bot no puede ser utilizado en grupos o canales que promueven el uso de tram
 
 En caso de ser baneado, el bot no contestará ningún comando ni permitirá apuntarse a las incursiones. Para comprobar si tu cuenta está baneada, puedes utilizar el comando `/profile` por privado. El estado de tu cuenta será **Baneada**.
 
+Para eliminar entrenadores de incursiones de forma selectiva, se puede utilizar `/unlist` seguido del nombre del entrenador. Este comando se utiliza como todos los de la familia de edición: o bien contestando a la incursión, o bien por privado especificando el identificador de la incursión y el nombre del entrenador deseado por ese orden.
+
 Si crees que se te ha baneado por error, pásate por el [grupo de ayuda](https://t.me/detectivepikachuayuda) y pide que revisen tu caso.
 
 # Protección de datos #
