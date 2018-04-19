@@ -28,7 +28,7 @@ Podes pedir ajuda no grupo [@detectivepikachuayuda](https://t.me/detectivepikach
 4. [Proteção de dados](#protección-de-datos)
 5. [Problemas frequentes](#problemas-frecuentes)
 
-## Ayuda para treinadores ##
+## Ajuda para treinadores ##
 
 ### Registrar-se no bot ###
 
