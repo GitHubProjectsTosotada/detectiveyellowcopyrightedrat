@@ -218,6 +218,8 @@ Para hacer la configuración básica del bot utiliza el comando `/settings`. La 
 
 4. **Botón «+1» por cada equipo**. Requiere la opción *Botón «+1»* (se marca automáticamente si es necesario). Si está activada, muestra tres botones «+1», uno por equipo, en vez de un único botón. Esta opción solo tiene sentido si tienes activada la opción de vista de incursión *Mostrar totales disgregados* o *Mostrar «+1» disgregados por línea*. Opción desactivada por defecto.
 
+5. **Edición permisiva**.  Si está activada, permite que cualquier entrenador apuntado a una incursión edite la hora, la hode finalización, el Pokémon o el gimnasio. Esta opción solo está recomendada para grupos reducidos y no para utilizar de forma general. Opción desactivada por defecto.
+
 #### Funcionamiento de rankings ####
 
 1. **Ranking Semanal**. Si está activado, permite a los administradores de un grupo mostrar un TOP 5, 10, 15, 20 o 25 semanal de participación en incursiones (según la opción seleccionada, por defecto 10) utilizando el comando `/ranking week` (o simplemente `/ranking`).

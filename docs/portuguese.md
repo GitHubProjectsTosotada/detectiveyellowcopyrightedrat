@@ -1,44 +1,44 @@
-Detective Pikachu es un bot de Telegram especializado en crear listados de participantes en incursiones de Pokémon GO.
+Detective Pikachu é um bot de Telegram especializado em criar listados de participantes em raids de Pokémon GO.
 
-Puedes pedir ayuda en el grupo [@detectivepikachuayuda](https://t.me/detectivepikachuayuda) y estar informado de las novedades en el canal [@detectivepikachunews](https://t.me/detectivepikachunews).
+Podes pedir ajuda no grupo [@detectivepikachuayuda](https://t.me/detectivepikachuayuda) e estar informado das novidades no canal [@detectivepikachunews](https://t.me/detectivepikachunews).
 
-1. [Ayuda para entrenadores](#ayuda-para-entrenadores)
-   1. [Registrarse en el bot](#registrarse-en-el-bot)
-   2. [Crear una incursión](#crear-una-incursión)
-   3. [Editar, cancelar, borrar y reflotar una incursión](#editar-cancelar-borrar-y-reflotar-una-incursión)
-   4. [Apuntarse a una incursión](#apuntarse-a-una-incursión)
-   5. [Alertas de incursiones](#alertas-de-incursiones)
-   6. [Estadístcas](#estadísticas)
-   7. [Más ayuda](#más-ayuda)
-2. [Ayuda para administradores](#ayuda-para-administradores)
-   1. [Grupos y canales](#grupos-y-canales)
-   2. [Añadir el bot a un grupo o canal](#añadir-el-bot-a-un-grupo-o-canal)
-   3. [Configuración](#configuración)
-   4. [Ubicaciones de gimnasios](#ubicaciones-de-gimnasios)
-      1. [Mejorar palabras clave](#mejorar-palabras-clave)
+1. [Ajuda para treinadores](#ajuda-para-treinadores)
+   1. [Registar-se no bot](#registrar-se-no-bot)
+   2. [Criar uma raid](#crear-una-incursión)
+   3. [Editar, cancelar, apagar e puxar uma raid](#editar-cancelar-borrar-y-reflotar-una-incursión)
+   4. [Inscrever-se numa raid](#apuntarse-a-una-incursión)
+   5. [Alertas de raids](#alertas-de-incursiones)
+   6. [Estatísticas](#estadísticas)
+   7. [Mais ajuda](#más-ayuda)
+2. [Ajuda para administradores](#ayuda-para-administradores)
+   1. [Grupos e canais](#grupos-y-canales)
+   2. [Adicionar o bot a um grupo ou canal](#añadir-el-bot-a-un-grupo-o-canal)
+   3. [Configuração](#configuración)
+   4. [Localizações de ginásios](#ubicaciones-de-gimnasios)
+      1. [Melhorar palavras chave](#mejorar-palabras-clave)
       2. [Etiquetas](#etiquetas)
       3. [Zonas](#zonas)
-      4. [Límites en número de zonas y ubicaciones de gimnasios](#límites-en-número-de-zonas-y-ubicaciones-de-gimnasios)
-   5. [Modo niñero](#modo-niñero)
-   6. [Zona horaria](#zona-horaria)
+      4. [Limites em número de zonas e localizações de ginásios](#límites-en-número-de-zonas-y-ubicaciones-de-gimnasios)
+   5. [Modo ama](#modo-niñero)
+   6. [Zona horária](#zona-horaria)
    7. [Idioma](#idioma)
    8. [Rankings](#rankings)
-   9. [Otros comandos exclusivos para administradores](#otros-comandos-exclusivos-para-administradores)
-3. [Política de tramposos](#política-de-tramposos)
-4. [Protección de datos](#protección-de-datos)
-5. [Problemas frecuentes](#problemas-frecuentes)
+   9. [Outros comandos exclusivos para administradores](#otros-comandos-exclusivos-para-administradores)
+3. [Política de batoteiros](#política-de-tramposos)
+4. [Proteção de dados](#protección-de-datos)
+5. [Problemas frequentes](#problemas-frecuentes)
 
-## Ayuda para entrenadores ##
+## Ayuda para treinadores ##
 
-### Registrarse en el bot ###
+### Registrar-se no bot ###
 
-El registro es obligatorio en algunos grupos (a discreción de los administradores), pero sea obligatorio o no, te permite **mostrar tu nombre de entrenador, equipo y nivel** en las incursiones y **participar en los rankings**.
+O registo é obrigatório nalguns grupos (ao critério dos administradores), mas seja obrigatório ou não, permite-te **mostrar o teu nome de treinador, equipe e nível** nas raids e **participar nos rankings**.
 
-Para registrarte tienes dos opciones:
+Para registrar-te tens duas opções:
 
-1. En un privado con [@detectivepikachubot](https://t.me/detectivepikachubot), escribe el comando `/register` y comenzarás el proceso de registro y validación. El proceso es automatizado y te pedirá que hagas una captura de pantalla del juego con unas condiciones.
+1. Em conversa privada com [@detectivepikachubot](https://t.me/detectivepikachubot), escreve o comando `/register` e começarás o processo de registo e validação. O processo é automatizado e pedir-te-á que faças um captura de ecrã do jogo com umas condições.
 
-2. Si estás registrado y validado con [@profesoroak_bot](https://t.me/profesoroak_bot), puedes sencillamente preguntarle `quién soy?` y reenviar la respuesta a [@detectivepikachubot](https://t.me/detectivepikachubot).
+2. Se estiveres registado e validado com o [@profesoroak_bot](https://t.me/profesoroak_bot), podes simplesmente perguntá-lhe `quién soy?` e reenviar a resposta a [@detectivepikachubot](https://t.me/detectivepikachubot).
 
 #### Subida de nivel ####
 
@@ -217,6 +217,8 @@ Para hacer la configuración básica del bot utiliza el comando `/settings`. La 
 3. **Botón «+1»**. Si está activada, aparecerá un botón que permite indicar que vas con acompañantes a la incursión. Se puede configurar un máximo de 1, 2, 3, 5 y 10 acompañantes. Opción activada por defecto y configurada con 5 acompañantes como máximo.
 
 4. **Botón «+1» por cada equipo**. Requiere la opción *Botón «+1»* (se marca automáticamente si es necesario). Si está activada, muestra tres botones «+1», uno por equipo, en vez de un único botón. Esta opción solo tiene sentido si tienes activada la opción de vista de incursión *Mostrar totales disgregados* o *Mostrar «+1» disgregados por línea*. Opción desactivada por defecto.
+
+5. **Edición permisiva**.  Si está activada, permite que cualquier entrenador apuntado a una incursión edite la hora, la hode finalización, el Pokémon o el gimnasio. Esta opción solo está recomendada para grupos reducidos y no para utilizar de forma general. Opción desactivada por defecto.
 
 #### Funcionamiento de rankings ####
 
