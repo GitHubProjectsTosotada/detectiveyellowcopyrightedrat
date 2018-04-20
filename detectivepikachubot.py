@@ -1537,7 +1537,7 @@ def unlistcmd(bot, update, args=None):
             else:
                 trainer = getUserByTrainername(name)
 
-            if trainer is None or not isParticipatingRaid(trainer["id"], raid["id"]):
+            if trainer is None:
                 user_id = chat_id if user_id is None else user_id
                 bot.sendMessage(chat_id=user_id, text=_("❌ No se ha podido eliminar el entrenador `{0}` de la incursión `{1}` porque no está apuntado.").format(name, raid["id"]), parse_mode=telegram.ParseMode.MARKDOWN)
                 return
