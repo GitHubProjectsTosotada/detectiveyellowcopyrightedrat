@@ -3,9 +3,9 @@ Detective Pikachu is a Telegram bot aimed to create listing of participants for 
 You can ask for help in the group [@detectivepikachuayuda](https://t.me/detectivepikachuayuda) and be informed of the development in the channel  [@detectivepikachunews](https://t.me/detectivepikachunews).
 
 1. [Help for trainers](#ayuda-para-entrenadores)
-   1. [Registrarse en el bot](#registrarse-en-el-bot)
-   2. [Crear una incursión](#crear-una-incursión)
-   3. [Editar, cancelar, borrar y reflotar una incursión](#editar-cancelar-borrar-y-reflotar-una-incursión)
+   1. [Register in the bot](#register-in-the-bot)
+   2. [Create a raid](#create-a-raid)
+   3. [Edit, cancel, delete and refloat a raid](#edit-cancel-delete-and-refloat-a-raid)
    4. [Apuntarse a una incursión](#apuntarse-a-una-incursión)
    5. [Alertas de incursiones](#alertas-de-incursiones)
    6. [Estadístcas](#estadísticas)
@@ -28,67 +28,67 @@ You can ask for help in the group [@detectivepikachuayuda](https://t.me/detectiv
 4. [Protección de datos](#protección-de-datos)
 5. [Problemas frecuentes](#problemas-frecuentes)
 
-## Ayuda para entrenadores ##
+## Help for trainers ##
 
-### Registrarse en el bot ###
+### Register in the bot ###
 
-El registro es obligatorio en algunos grupos (a discreción de los administradores), pero sea obligatorio o no, te permite **mostrar tu nombre de entrenador, equipo y nivel** en las incursiones y **participar en los rankings**.
+Register is mandatory in some groups (chosen by the group administrators), but mandatory or not, it lets you **show your trainer name, team and level** in raids and **be featured in rankings**.
 
-Para registrarte tienes dos opciones:
+There are two options for registerig:
 
-1. En un privado con [@detectivepikachubot](https://t.me/detectivepikachubot), escribe el comando `/register` y comenzarás el proceso de registro y validación. El proceso es automatizado y te pedirá que hagas una captura de pantalla del juego con unas condiciones.
+1. In private with [@detectivepikachubot](https://t.me/detectivepikachubot), use the command `/register` to start the validation process. It is automatized and it will require you a game screenshot with some particular conditions to verify your identity.
 
-2. Si estás registrado y validado con [@profesoroak_bot](https://t.me/profesoroak_bot), puedes sencillamente preguntarle `quién soy?` y reenviar la respuesta a [@detectivepikachubot](https://t.me/detectivepikachubot).
+2. If you are already registered and validated with [@profesoroak_bot](https://t.me/profesoroak_bot), you can just ask him `quién soy?` and forward the reply to [@detectivepikachubot](https://t.me/detectivepikachubot).
 
-#### Subida de nivel ####
+#### Leveling up ####
 
-Para indicar una subida de nivel, basta con enviar una captura de pantalla del perfil donde se vea el nuevo nivel, una vez se esté validado. Si el bot no contesta nada, es debido a que el estado de validación no es correcto.
+For leveling up, just send an in-game profile screenshot with the new level, assuming you are already validated. If the bot is not answering, maybe the validation status is not ok.
 
-Alternativamente, puedes subir nivel en [@profesoroak_bot](https://t.me/profesoroak_bot) y luego reenviar de nuevo la respuesta de `quién soy?` a [@detectivepikachubot](https://t.me/detectivepikachubot) para actualizar los datos.
+You can also level up in [@profesoroak_bot](https://t.me/profesoroak_bot) and then ask `quién soy?` and forward again the reply to   [@detectivepikachubot](https://t.me/detectivepikachubot) to update the level.
 
-#### Cambio de nombre de entrenador ####
+#### Trainer nickname change ####
 
-Si has cambiado tu nombre de entrenador en el juego, debes volver a hacer el proceso de registro. No hay ninguna restricción, aunque ya estuvieras validado anteriormente con otra cuenta.
+If you have changed your in-game trainer nickname, you must register again. There are no restrictions, even if you were already validated with another account.
 
-#### Cambio de cuenta de Telegram ####
+#### Telegram account change ####
 
-Si has cambiado de número de teléfono y prefieres utilizar el bot con la cuenta de Telegram correspondiente al nuevo número, solicita un reseteo de tu cuenta anterior, para que puedas validarte con la nueva, en el correo electrónico [validations@detectivepik.ac](mailto:validations@detectivepik.ac)
+If you have a new mobile number and you want to use the bot with the Telegram account associated with the new number, you must write an e-mail to [validations@detectivepik.ac](mailto:validations@detectivepik.ac) asking for an account reset to be able to use the bot.
 
-### Crear una incursión ###
+### Create a raid ###
 
-Se puede crear una incursión de forma interactiva con el comando:
+You can create a raid interactively with the command:
 
     /raid
 
-También se pueden especificar los parámetros directamente, algo que es necesario si alguno de los parámetros no aparece en el menú de creación interactivo. La sintaxis para crear una incursión nueva de esta forma es sencilla:
+You can specify the parameters instead. You must follow this syntax:
 
-    /raid pokemon hora gimnasio
+    /raid pokemon time gym
 
-Es importante seguir este mismo orden, sino lo más seguro es que el bot no te entienda. También se puede añadir una hora a la que desaparece el Pokémon.
+You must follow this ordering. If you fail to do so, the bot won't understand you. You can also specify the time that the Pokémon disappears.
 
-    /raid pokemon hora gimnasio horafin
+    /raid pokemon time gym endtime
 
-Algunos ejemplos:
+Some examples:
 
-    /raid Raikou 14:30 Alameda
-    /raid Entei 3:30 Plaza de la verdura
-    /raid Metapod 12 Plaza Mayor 12:15
+    /raid Raikou 14:30 Avenue Park
+    /raid Entei 3:30 Pineapple Park
+    /raid Metapod 12 Avenue Park 12:15
 
-En lugar de especificar un Pokémon, se puede especificar un huevo, por ejemplo, para un huevo de nivel 4 se pondría *N4*:
+You can specify an egg instead of a Pokémon. For example, for a tier 4 egg you should write *T4*:
 
-    /raid N4 13:00 Alameda
+    /raid T4 13:00 Pineapple Park
 
-Para crear incursiones EX se debe utilizar la palabra *EX* y especificar el día de la incursión con el siguiente formato:
+To create EX raids you must write *EX* and specify the day with this format:
 
-    /raid EX dia/hora gimnasio
+    /raid EX day/time gym
 
-Por ejemplo, para una incursión EX el día 12 a las 15:30 en el gimnasio Crucero:
+For example, for an EX raid on day 12 at 15:30 in the gym Pineapple Park:
 
-    /raid EX 12/15:30 Crucero
+    /raid EX 12/15:30 Pineapple Park
 
 Para poder crear una incursión es **necesario tener un alias** definido en Telegram y. Además, algunos grupos exigen **estar validado** en el bot. Si no puedes crear una incursión por alguno de estos motivos, el bot te informará.
 
-### Editar, cancelar, borrar y reflotar una incursión ###
+### Edit, cancel, delete and refloat a raid ###
 
 Se pueden editar y añadir todos los detalles de la incursión después de crearla: cambiar la hora, el gimnasio, el Pokémon (o el huevo) y la hora a la que desaparece.
 

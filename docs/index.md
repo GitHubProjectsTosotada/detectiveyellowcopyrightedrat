@@ -60,7 +60,7 @@ Se puede crear una incursión de forma interactiva con el comando:
 
     /raid
 
-También se pueden especificar los parámetros directamente, algo que es necesario si alguno de los parámetros no aparece en el menú de creación interactivo. La sintaxis para crear una incursión nueva de esta forma es sencilla:
+También se pueden especificar los parámetros directamente. La sintaxis para crear una incursión de esta forma debe ser así:
 
     /raid pokemon hora gimnasio
 
