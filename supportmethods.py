@@ -40,8 +40,12 @@ from config import config
 from storagemethods import getRaidbyMessage, getCreadorRaid, getRaidPeople, getRaid, getAlertsByPlace, getGroup, getZones, updateRaidsStatus, updateValidationsStatus, getPlace, getAutorefloatGroups, getActiveRaidsforGroup, saveRaid, updateLastAutorefloat, savePlace, getGroupTimezoneOffsetFromServer, getCurrentPokemons, getCurrentGyms, removeIncompleteRaids, getAutorankingGroups, getRanking, getCachedRanking, saveCachedRanking, getUser
 from telegram.error import (TelegramError, Unauthorized, BadRequest, TimedOut, ChatMigrated, NetworkError)
 
+def _(message): return message
+
 pokemonlist = ['Bulbasaur','Ivysaur','Venusaur','Charmander','Charmeleon','Charizard','Squirtle','Wartortle','Blastoise','Caterpie','Metapod','Butterfree','Weedle','Kakuna','Beedrill','Pidgey','Pidgeotto','Pidgeot','Rattata','Raticate','Spearow','Fearow','Ekans','Arbok','Pikachu','Raichu','Sandshrew','Sandslash','Nidoran♀','Nidorina','Nidoqueen','Nidoran♂','Nidorino','Nidoking','Clefairy','Clefable','Vulpix','Ninetales','Jigglypuff','Wigglytuff','Zubat','Golbat','Oddish','Gloom','Vileplume','Paras','Parasect','Venonat','Venomoth','Diglett','Dugtrio','Meowth','Persian','Psyduck','Golduck','Mankey','Primeape','Growlithe','Arcanine','Poliwag','Poliwhirl','Poliwrath','Abra','Kadabra','Alakazam','Machop','Machoke','Machamp','Bellsprout','Weepinbell','Victreebel','Tentacool','Tentacruel','Geodude','Graveler','Golem','Ponyta','Rapidash','Slowpoke','Slowbro','Magnemite','Magneton','Farfetch\'d','Doduo','Dodrio','Seel','Dewgong','Grimer','Muk','Shellder','Cloyster','Gastly','Haunter','Gengar','Onix','Drowzee','Hypno','Krabby','Kingler','Voltorb','Electrode','Exeggcute','Exeggutor','Cubone','Marowak','Hitmonlee','Hitmonchan','Lickitung','Koffing','Weezing','Rhyhorn','Rhydon','Chansey','Tangela','Kangaskhan','Horsea','Seadra','Goldeen','Seaking','Staryu','Starmie','Mr.Mime','Scyther','Jynx','Electabuzz','Magmar','Pinsir','Tauros','Magikarp','Gyarados','Lapras','Ditto','Eevee','Vaporeon','Jolteon','Flareon','Porygon','Omanyte','Omastar','Kabuto','Kabutops','Aerodactyl','Snorlax','Articuno','Zapdos','Moltres','Dratini','Dragonair','Dragonite','Mewtwo','Mew','Chikorita','Bayleef','Meganium','Cyndaquil','Quilava','Typhlosion','Totodile','Croconaw','Feraligatr','Sentret','Furret','Hoothoot','Noctowl','Ledyba','Ledian','Spinarak','Ariados','Crobat','Chinchou','Lanturn','Pichu','Cleffa','Igglybuff','Togepi','Togetic','Natu','Xatu','Mareep','Flaaffy','Ampharos','Bellossom','Marill','Azumarill','Sudowoodo','Politoed','Hoppip','Skiploom','Jumpluff','Aipom','Sunkern','Sunflora','Yanma','Wooper','Quagsire','Espeon','Umbreon','Murkrow','Slowking','Misdreavus','Unown','Wobbuffet','Girafarig','Pineco','Forretress','Dunsparce','Gligar','Steelix','Snubbull','Granbull','Qwilfish','Scizor','Shuckle','Heracross','Sneasel','Teddiursa','Ursaring','Slugma','Magcargo','Swinub','Piloswine','Corsola','Remoraid','Octillery','Delibird','Mantine','Skarmory','Houndour','Houndoom','Kingdra','Phanpy','Donphan','Porygon2','Stantler','Smeargle','Tyrogue','Hitmontop','Smoochum','Elekid','Magby','Miltank','Blissey','Raikou','Entei','Suicune','Larvitar','Pupitar','Tyranitar','Lugia','Ho-Oh','Celebi','Treecko','Grovyle','Sceptile','Torchic','Combusken','Blaziken','Mudkip','Marshtomp','Swampert','Poochyena','Mightyena','Zigzagoon','Linoone','Wurmple','Silcoon','Beautifly','Cascoon','Dustox','Lotad','Lombre','Ludicolo','Seedot','Nuzleaf','Shiftry','Taillow','Swellow','Wingull','Pelipper','Ralts','Kirlia','Gardevoir','Surskit','Masquerain','Shroomish','Breloom','Slakoth','Vigoroth','Slaking','Nincada','Ninjask','Shedinja','Whismur','Loudred','Exploud','Makuhita','Hariyama','Azurill','Nosepass','Skitty','Delcatty','Sableye','Mawile','Aron','Lairon','Aggron','Meditite','Medicham','Electrike','Manectric','Plusle','Minun','Volbeat','Illumise','Roselia','Gulpin','Swalot','Carvanha','Sharpedo','Wailmer','Wailord','Numel','Camerupt','Torkoal','Spoink','Grumpig','Spinda','Trapinch','Vibrava','Flygon','Cacnea','Cacturne','Swablu','Altaria','Zangoose','Seviper','Lunatone','Solrock','Barboach','Whiscash','Corphish','Crawdaunt','Baltoy','Claydol','Lileep','Cradily','Anorith','Armaldo','Feebas','Milotic','Castform','Kecleon','Shuppet','Banette','Duskull','Dusclops','Tropius','Chimecho','Absol','Wynaut','Snorunt','Glalie','Spheal','Sealeo','Walrein','Clamperl','Huntail','Gorebyss','Relicanth','Luvdisc','Bagon','Shelgon','Salamence','Beldum','Metang','Metagross','Regirock','Regice','Registeel','Latias','Latios','Kyogre','Groudon','Rayquaza','Jirachi','Deoxys']
-egglist = ['N1','N2','N3','N4','N5','EX']
+pokemonlist_fr = ['Bulbizarre','Herbizarre','Florizarre','Salamèche','Reptincel','Dracaufeu','Carapuce','Carabaffe','Tortank','Chenipan','Chrysacier','Papilusion','Aspicot','Coconfort','Dardargnan','Roucool','Roucoups','Roucarnage','Rattata','Rattatac','Piafabec','Rapasdepic','Abo','Arbok','Pikachu','Raichu','Sabelette','Sablaireau','Nidoran♀','Nidorina','Nidoqueen','Nidoran♂','Nidorino','Nidoking','Mélofée','Mélodelfe','Goupix','Feunard','Rondoudou','Grodoudou','Nosferapti','Nosferalto','Mystherbe','Ortide','Rafflesia','Paras','Parasect','Mimitoss','Aéromite','Taupiqueur','Triopikeur','Miaouss','Persian','Psykokwak','Akwakwak','Férosinge','Colossinge','Caninos','Arcanin','Ptitard','Têtarte','Tartard','Abra','Kadabra','Alakazam','Machoc','Machopeur','Mackogneur','Chétiflor','Boustiflor','Empiflor','Tentacool','Tentacruel','Racaillou','Gravalanch','Grolem','Ponyta','Galopa','Ramoloss','Flagadoss','Magnéti','Magnéton','Canarticho','Doduo','Dodrio','Otaria','Lamantine','Tadmorv','Grotadmorv','Kokiyas','Crustabri','Fantominus','Spectrum','Ectoplasma','Onix','Soporifik','Hypnomade','Krabby','Krabboss','Voltorbe','Électrode','Miaouss','Persian','Psykokwak','Akwakwak','Férosinge','Colossinge','Caninos','Arcanin','Ptitard','Têtarte','Tartard','Abra','Kadabra','Alakazam','Machoc','Machopeur','Mackogneur','Chétiflor','Boustiflor','Empiflor','Tentacool','Tentacruel','Racaillou','Gravalanch','Grolem','Ponyta','Galopa','Ramoloss','Flagadoss','Magnéti','Magnéton','Canarticho','Doduo','Dodrio','Otaria','Lamantine','Tadmorv','Grotadmorv','Kokiyas','Crustabri','Fantominus','Spectrum','Ectoplasma','Onix','Soporifik','Hypnomade','Krabby','Krabboss','Voltorbe','Électrode','Germignon','Macronium','Méganium','Héricendre','Feurisson','Typhlosion','Kaiminus','Crocrodil','Aligatueur','Fouinette','Fouinar','Hoothoot','Noarfang','Coxy','Coxyclaque','Mimigal','Migalos','Nostenfer','Loupio','Lanturn','Pichu','Mélo','Toudoudou','Togepi','Togetic','Natu','Xatu','Wattouat','Lainergie','Pharamp','Joliflor','Marill','Azumarill','Simularbre','Tarpaud','Granivol','Floravol','Cotovol','Capumain','Tournegrin','Héliatronc','Yanma','Axoloto','Maraiste','Mentali','Noctali','Cornèbre','Roigada','Feuforêve','Zarbi','Qulbutoké','Girafarig','Pomdepik','Foretress','Insolourdo','Scorplane','Steelix','Snubbull','Granbull','Qwilfish','Cizayox','Caratroc','Scarhino','Farfuret','Teddiursa','Ursaring','Limagma','Volcaropod','Marcacrin','Cochignon','Corayon','Rémoraid','Octillery','Cadoizo','Démanta','Airmure','Malosse','Démolosse','Hyporoi','Phanpy','Donphan','Porygon2','Cerfrousse','Queulorior','Debugant','Kapoera','Lippouti','Élekid','Magby','Écrémeuh','Leuphorie','Raikou','Entei','Suicune','Embrylex','Ymphect','Tyranocif','Lugia','Ho-Oh','Celebi','Arcko','Massko','Jungko','Poussifeu','Galifeu','Braségali','Gobou','Flobio','Laggron','Medhyèna','Grahyèna','Zigzaton','Linéon','Chenipotte','Armulys','Charmillon','Blindalys','Papinox','Nénupiot','Lombre','Ludicolo','Grainipiot','Pifeuil','Tengalice','Nirondelle','Hélédelle','Goélise','Bekipan','Tarsal','Kirlia','Gardevoir','Arakdo','Maskadra','Balignon','Chapignon','Parecool','Vigoroth','Monaflèmit','Ningale','Ninjask','Munja','Chuchmur','Ramboum','Brouhabam','Makuhita','Hariyama','Azurill','Tarinor','Skitty','Delcatty','Ténéfix','Mysdibule','Galekid','Galegon','Galeking','Méditikka','Charmina','Dynavolt','Élecsprint','Posipi','Négapi','Muciole','Lumivole','Rosélia','Gloupti','Avaltout','Carvanha','Sharpedo','Wailmer','Wailord','Chamallot','Camérupt','Chartor','Spoink','Groret','Spinda','Kraknoix','Vibraninf','Libégon','Cacnea','Cacturne','Tylton','Altaria','Mangriff','Séviper','Séléroc','Solaroc','Barloche','Barbicha','Écrapince','Colhomard','Balbuto','Kaorine','Lilia','Vacilys','Anorith','Armaldo','Barpau','Milobellus','Morphéo','Kecleon','Polichombr','Branette','Skelénox','Téraclope','Tropius','Éoko','Absol','Okéoké','Stalgamin','Oniglali','Obalie','Phogleur','Kaimorse','Coquiperl','Serpang','Rosabyss','Relicanth','Lovdisc','Draby','Drackhaus','Drattak','Terhal','Métang','Métalosse','Regirock','Regice','Registeel','Latias','Latios','Kyogre','Groudon','Rayquaza','Jirachi','Deoxys']
+pokemonlist_de = ['Bisasam','Bisaknosp','Bisaflor','Glumanda','Glutexo','Glurak','Schiggy','Schillok','Turtok','Raupy','Safcon','Smettbo','Hornliu','Kokuna','Bibor','Taubsi','Tauboga','Tauboss','Rattfratz','Rattikarl','Habitak','Ibitak','Rettan','Arbok','Pikachu','Raichu','Sandan','Sandamer','Nidoran♀','Nidorina','Nidoqueen','Nidoran♂','Nidorino','Nidoking','Piepi','Pixi','Vulpix','Vulnona','Pummeluff','Knuddeluff','Zubat','Golbat','Myrapla','Duflor','Giflor','Paras','Parasek','Bluzuk','Omot','Digda','Digdri','Mauzi','Snobilikat','Enton','Entoron','Menki','Rasaff','Fukano','Arkani','Quapsel','Quaputzi','Quappo','Abra','Kadabra','Simsala','Machollo','Maschock','Machomei','Knofensa','Ultrigaria','Sarzenia','Tentacha','Tentoxa','Kleinstein','Georok','Geowaz','Ponita','Gallopa','Flegmon','Lahmus','Magnetilo','Magneton','Porenta','Dodu','Dodri','Jurob','Jugong','Sleima','Sleimok','Muschas','Austos','Nebulak','Alpollo','Gengar','Onix','Traumato','Hypno','Krabby','Kingler','Voltobal','Lektrobal','Owei','Kokowei','Tragosso','Knogga','Kicklee','Nockchan','Schlurp','Smogon','Smogmog','Rihorn','Rizeros','Chaneira','Tangela','Kangama','Seeper','Seemon','Goldini','Golking','Sterndu','Starmie','Pantimos','Sichlor','Rossana','Elektek','Magmar','Pinsir','Tauros','Karpador','Garados','Lapras','Ditto','Evoli','Aquana','Blitza','Flamara','Porygon','Amonitas','Amoroso','Kabuto','Kabutops','Aerodactyl','Relaxo','Arktos','Zapdos','Lavados','Dratini','Dragonir','Dragoran','Mewtu','Mew','Endivie','Lorblatt','Meganie','Feurigel','Igelavar','Tornupto','Karnimani','Tyracroc','Impergator','Wiesor','Wiesenior','Hoothoot','Noctuh','Ledyba','Ledian','Webarak','Ariados','Iksbat','Lampi','Lanturn','Pichu','Pii','Fluffeluff','Togepi','Togetic','Natu','Xatu','Voltilamm','Waaty','Ampharos','Blubella','Marill','Azumarill','Mogelbaum','Quaxo','Hoppspross','Hubelupf','Papungha','Griffel','Sonnkern','Sonnflora','Yanma','Felino','Morlord','Psiana','Nachtara','Kramurx','Laschoking','Traunfugil','Icognito','Woingenau','Girafarig','Tannza','Forstellka','Dummisel','Skorgla','Stahlos','Snubbull','Granbull','Baldorfish','Scherox','Pottrott','Skaraborn','Sniebel','Teddiursa','Ursaring','Schneckmag','Magcargo','Quiekel','Keifel','Corasonn','Remoraid','Octillery','Botogel','Mantax','Panzaeron','Hunduster','Hundemon','Seedraking','Phanpy','Donphan','Porygon2','Damhirplex','Farbeagle','Rabauz','Kapoera','Kussilla','Elekid','Magby','Miltank','Heiteira','Raikou','Entei','Suicune','Larvitar','Pupitar','Despotar','Lugia','Ho-Oh','Celebi','Geckarbor','Reptain','Gewaldro','Flemmli','Jungglut','Lohgock','Hydropi','Moorabbel','Sumpex','Fiffyen','Magnayen','Zigzachs','Geradaks','Waumpel','Schaloko','Papinella','Panekon','Pudox','Loturzel','Lombrero','Kappalores','Samurzel','Blanas','Tengulist','Schwalbini','Schwalboss','Wingull','Pelipper','Trasla','Kirlia','Guardevoir','Gehweiher','Maskeregen','Knilz','Kapilz','Bummelz','Muntier','Letarking','Nincada','Ninjask','Ninjatom','Flurmel','Krakeelo','Krawumms','Makuhita','Hariyama','Azurill','Nasgnet','Eneco','Enekoro','Zobiris','Flunkifer','Stollunior','Stollrak','Stolloss','Meditie','Meditalis','Frizelbliz','Voltenso','Plusle','Minun','Volbeat','Illumise','Roselia','Schluppuck','Schlukwech','Kanivanha','Tohaido','Wailmer','Wailord','Camaub','Camerupt','Qurtel','Spoink','Groink','Pandir','Knacklion','Vibrava','Libelldra','Tuska','Noktuska','Wablu','Altaria','Sengo','Vipitis','Lunastein','Sonnfel','Schmerbe','Welsar','Krebscorps','Krebutack','Puppance','Lepumentas','Liliep','Wielie','Anorith','Armaldo','Barschwa','Milotic','Formeo','Kecleon','Shuppet','Banette','Zwirrlicht','Zwirrklop','Tropius','Palimpalim','Absol','Isso','Schneppke','Firnontor','Seemops','Seejong','Walraisa','Perlu','Aalabyss','Saganabyss','Relicanth','Liebiskus','Kindwurm','Draschel','Brutalanda','Tanhel','Metang','Metagross','Regirock','Regice','Registeel','Latias','Latios','Kyogre','Groudon','Rayquaza','Jirachi','Deoxys']
+egglist = [_("N1"), _("N2"), _("N3"), _("N4"), _("N5"), _("EX")]
 iconthemes = [
     { "Rojo": "🔥", "Azul": "❄️", "Amarillo": "⚡️" },
     { "Rojo": "🔴", "Azul": "🔵", "Amarillo": "🌕" },
@@ -51,9 +55,13 @@ iconthemes = [
     { "Rojo": "🦊", "Azul": "🐳", "Amarillo": "🐥" }
 ]
 
-validation_pokemons = ["chikorita", "machop", "growlithe", "diglett", "spinarak", "ditto", "teddiursa", "cubone", "sentret", "voltorb", "zigzagoon", "gulpin", "jigglypuff"]
+validation_pokemons = [_("chikorita"), _("machop"), _("growlithe"), _("diglett"), _("spinarak"), _("ditto"), _("teddiursa"), _("cubone"), _("sentret"), _("voltorb"), _("zigzagoon"), _("gulpin"), _("jigglypuff")]
 validation_profiles = ["model1", "model2", "model3", "model4", "model5", "model6"]
-validation_names = ["Calabaza", "Puerro", "Cebolleta", "Remolacha", "Aceituna", "Pimiento", "Zanahoria", "Tomate", "Guisante", "Coliflor", "Pepino", "Berenjena", "Perejil", "Batata", "Aguacate", "Alcaparra", "Escarola", "Lechuga", "Hinojo"]
+validation_names = [_("Calabaza"), _("Puerro"), _("Cebolleta"), _("Remolacha"), _("Aceituna"), _("Pimiento"), _("Zanahoria"), _("Tomate"), _("Guisante"), _("Coliflor"), _("Pepino"), _("Berenjena"), _("Perejil"), _("Batata"), _("Aguacate"), _("Alcaparra"), _("Escarola"), _("Lechuga"), _("Hinojo")]
+
+teams = [_("Rojo"), _("Azul"), _("Amarillo")]
+
+del _
 
 def is_admin(chat_id, user_id, bot):
     is_admin = False
@@ -151,22 +159,24 @@ def send_alerts(raid, bot):
     alerts = getAlertsByPlace(raid["gimnasio_id"])
     group = getGroup(raid["grupo_id"])
     if group["alerts"] == 1:
-        what_text = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_)
-        what_day = format_text_day(raid["timeraid"], group["timezone"], langfunc=_)
-        if group["alias"] is not None:
-            incursion_text = "<a href='https://t.me/%s/%s'>incursión</a>" % (group["alias"], raid["message"])
-            group_text =  "<a href='https://t.me/%s'>%s</a>" % (group["alias"], html.escape(group["title"]))
-        else:
-            incursion_text = "incursión"
-            try:
-                group_text = "<i>%s</i>" % (html.escape(group["title"]))
-            except:
-                group_text = "<i>(Grupo sin nombre guardado)</i>"
         logging.debug("supportmethods:send_alerts: Sending %i alerts" % len(alerts))
         for alert in alerts:
             logging.debug("supportmethods:send_alerts: Sending alert %s" % alert)
             try:
-                bot.sendMessage(chat_id=alert["user_id"], text="🔔 Se ha creado una %s %s en <b>%s</b> %sa las <b>%s</b> en el grupo %s.\n\n<i>Recibes esta alerta porque has activado las alertas para ese gimnasio. Si no deseas recibir más alertas, puedes usar el comando</i> <code>/clearalerts</code>" % (incursion_text, what_text, raid["gimnasio_text"], what_day, extract_time(raid["timeraid"]), group_text), parse_mode=telegram.ParseMode.HTML, disable_web_page_preview=True)
+                user = getUser(alert["user_id"])
+                _ = set_language(user["language"])
+                what_day = format_text_day(raid["timeraid"], group["timezone"], langfunc=_)
+                if group["alias"] is not None:
+                    incursion_text = "<a href='https://t.me/%s/%s'>incursión</a>" % (group["alias"], raid["message"])
+                    group_text =  "<a href='https://t.me/%s'>%s</a>" % (group["alias"], html.escape(group["title"]))
+                else:
+                    incursion_text = _("incursión")
+                    try:
+                        group_text = "<i>%s</i>" % (html.escape(group["title"]))
+                    except:
+                        group_text = _("<i>(Grupo sin nombre guardado)</i>")
+                what_text = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_, lang=user["language"])
+                bot.sendMessage(chat_id=alert["user_id"], text=_("🔔 Se ha creado una {0} {1} en <b>{2}</b> {3}a las <b>{4}</b> en el grupo {5}.\n\n<i>Recibes esta alerta porque has activado las alertas para ese gimnasio. Si no deseas recibir más alertas, puedes usar el comando</i> <code>/clearalerts</code>").format(incursion_text, what_text, raid["gimnasio_text"], what_day, extract_time(raid["timeraid"]), group_text), parse_mode=telegram.ParseMode.HTML, disable_web_page_preview=True)
             except:
                 logging.debug("supportmethods:send_alerts: Error sending alert %s" % alert)
 
@@ -246,7 +256,7 @@ def format_message(raid):
             gym_emoji="❓"
     else:
         gym_emoji=""
-    what_text = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_)
+    what_text = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_, lang=group["language"])
     what_day = format_text_day(raid["timeraid"], group["timezone"], "html", langfunc=_)
     if creador["username"] is not None:
         if creador["trainername"] is not None:
@@ -351,11 +361,11 @@ def format_message(raid):
                 text = text + "\n%s➖ - - <a href='https://t.me/%s'>@%s</a>%s%s%s" % (estoy_text,user["username"],user["username"],lotengo_text,lateadded_text,plus_text)
     return text
 
-def format_text_pokemon(pokemon, egg, format="markdown", langfunc=None):
+def format_text_pokemon(pokemon, egg, format="markdown", langfunc=None, lang="es_ES"):
     if langfunc is not None:
         _ = langfunc
     if pokemon is not None:
-        what_text = _("de <b>{0}</b>").format(pokemon) if format == "html" else _("de *{0}*").format(pokemon)
+        what_text = _("de <b>{0}</b>").format(localized_pokemon(pokemon,lang)) if format == "html" else _("de *{0}*").format(localized_pokemon(pokemon,lang))
     else:
         if egg == "EX":
             what_text = _("<b>🌟EX</b>") if format == "html" else _("*🌟EX*")
@@ -577,7 +587,7 @@ def error_callback(bot, update, error):
 def send_edit_instructions(group, raid, user, bot):
     user_id = user["id"]
     _ = set_language(user["language"])
-    what_text = format_text_pokemon(raid["pokemon"], raid["egg"], langfunc=_)
+    what_text = format_text_pokemon(raid["pokemon"], raid["egg"], langfunc=_, lang=group["language"])
     what_day = format_text_day(raid["timeraid"], group["timezone"], langfunc=_)
     day = extract_day(raid["timeraid"], group["timezone"])
 
@@ -628,30 +638,30 @@ def warn_people(warntype, raid, user, chat_id, bot):
             else:
                 user_text = _("Se")
             if warntype == "cancel":
-                text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_)
+                text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_, lang=p["language"])
                 text = _("❌ {0} ha <b>cancelado</b> la {1} {2} a las {3} en {4}").format(user_text, incursion_text, text_pokemon, extract_time(raid["timeraid"]), raid["gimnasio_text"])
             elif warntype == "uncancel":
-                text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_)
+                text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_, lang=p["language"])
                 text = _("⚠️ {0} ha <b>descancelado</b> la {1} {2} a las {3} en {4}").format(user_text, incursion_text, text_pokemon, extract_time(raid["timeraid"]), raid["gimnasio_text"])
             elif warntype == "delete":
-                text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_)
+                text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_, lang=p["language"])
                 text = _("🚫 {0} ha <b>borrado</b> la incursión {1} a las {2} en {3}").format(user_text, text_pokemon, extract_time(raid["timeraid"]), raid["gimnasio_text"])
             elif warntype == "time":
                 text_day = format_text_day(raid["timeraid"], group["timezone"], "html", langfunc=_)
                 if text_day != "":
                     text_day = " " + text_day
-                text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_)
+                text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_, lang=p["language"])
                 text = _("⚠️ {0} ha cambiado la hora de la {1} {2} en {3} para las <b>{4}</b>{5}").format(user_text, incursion_text, text_pokemon, raid["gimnasio_text"], extract_time(raid["timeraid"]), text_day)
             elif warntype == "endtime":
-                text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_)
+                text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_, lang=p["language"])
                 text = _("⚠️ {0} ha cambiado la hora a la que se termina la {1} {2} en {3} a las <b>{4}</b> (¡ojo, la incursión sigue programada para la misma hora: {5}!)").format(user_text, incursion_text, text_pokemon, raid["gimnasio_text"], extract_time(raid["timeend"]), extract_time(raid["timeraid"]))
             elif warntype == "deleteendtime":
                 text = _("⚠️ {0} ha borrado la hora a la que se termina la {1} {2} en {3} (¡ojo, la incursión sigue programada para la misma hora: {4}!)").format(user_text, incursion_text, raid["pokemon"], raid["gimnasio_text"], extract_time(raid["timeraid"]))
             elif warntype == "gym":
-                text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_)
+                text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_, lang=p["language"])
                 text = _("⚠️ {0} ha cambiado el gimnasio de la {1} {2} para las {3} a <b>{4}</b>").format(user_text, incursion_text, text_pokemon, extract_time(raid["timeraid"]), raid["gimnasio_text"])
             elif warntype == "pokemon":
-                text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_)
+                text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_, lang=p["language"])
                 text = _("⚠️ {0} ha cambiado la {1} para las {2} en {3} a incursión {4}").format(user_text, incursion_text, extract_time(raid["timeraid"]), raid["gimnasio_text"], text_pokemon)
             bot.sendMessage(chat_id=p["id"], text=text, parse_mode=telegram.ParseMode.HTML, disable_web_page_preview=True)
             warned.append(p["username"])
@@ -789,7 +799,7 @@ def get_settings_keyboard(chat_id, keyboard="main", langfunc=None):
     settings_markup = InlineKeyboardMarkup(settings_keyboard)
     return settings_markup
 
-def get_pokemons_keyboard(langfunc=None):
+def get_pokemons_keyboard(langfunc=None, lang="es_ES"):
     logging.debug("supportmethods:get_pokemons_keyboard")
     keyboard = []
     current_pokemons = getCurrentPokemons()
@@ -799,11 +809,11 @@ def get_pokemons_keyboard(langfunc=None):
         _ = langfunc
 
     for i in range(0, maxpokes ,3):
-        keyboard_row = [InlineKeyboardButton(current_pokemons[i]["pokemon"], callback_data="iraid_pokemon_%s" % current_pokemons[i]["pokemon"])]
+        keyboard_row = [InlineKeyboardButton(localized_pokemon(current_pokemons[i]["pokemon"], lang), callback_data="iraid_pokemon_%s" % current_pokemons[i]["pokemon"])]
         if i+1 < len(current_pokemons):
-            keyboard_row.append(InlineKeyboardButton(current_pokemons[i+1]["pokemon"], callback_data="iraid_pokemon_%s" % current_pokemons[i+1]["pokemon"]))
+            keyboard_row.append(InlineKeyboardButton(localized_pokemon(current_pokemons[i+1]["pokemon"], lang), callback_data="iraid_pokemon_%s" % current_pokemons[i+1]["pokemon"]))
         if i+2 < len(current_pokemons):
-            keyboard_row.append(InlineKeyboardButton(current_pokemons[i+2]["pokemon"], callback_data="iraid_pokemon_%s" % current_pokemons[i+2]["pokemon"]))
+            keyboard_row.append(InlineKeyboardButton(localized_pokemon(current_pokemons[i+2]["pokemon"], lang), callback_data="iraid_pokemon_%s" % current_pokemons[i+2]["pokemon"]))
         keyboard.append(keyboard_row)
 
     keyboard.append([InlineKeyboardButton(_("Niv. 5"), callback_data="iraid_pokemon_N5"), InlineKeyboardButton(_("Niv. 4"), callback_data="iraid_pokemon_N4"), InlineKeyboardButton(_("Niv. 3"), callback_data="iraid_pokemon_N3"), InlineKeyboardButton(_("EX"), callback_data="iraid_pokemon_EX")])
@@ -1102,6 +1112,21 @@ def edit_check_private_or_reply(chat_id, chat_type, message, args, user_username
         Thread(target=delete_message_timed, args=(chat_id, sent_message.message_id, 15, bot)).start()
         raid = None
     return raid
+
+def localized_pokemon(pokemon, language="es_ES"):
+    logging.debug("supportmethods:localized_pokemon %s %s" % (pokemon, language))
+    localize = False
+    if re.match("fr_", language, flags=re.IGNORECASE):
+        pklist = pokemonlist_fr
+        localize = True
+    elif re.match("de_", language, flags=re.IGNORECASE):
+        pklist = pokemonlist_de
+        localize = True
+    if localize is False:
+        return pokemon
+    else:
+        i = pokemonlist.index(pokemon)
+        return pklist[i]
 
 def parse_pokemon(pokestr):
     ret_pok = None

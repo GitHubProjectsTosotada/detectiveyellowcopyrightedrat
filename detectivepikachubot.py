@@ -54,7 +54,7 @@ import gettext
 
 from config import config
 from storagemethods import saveGroup, savePlaces, savePlace, getGroup, getPlaces, saveUser, saveWholeUser, getUser, isBanned, refreshUsername, saveRaid, getRaid, raidVoy, raidPlus1, raidEstoy, raidNovoy, raidLlegotarde, getCreadorRaid, getRaidbyMessage, getPlace, deleteRaid, getRaidPeople, closeRaid, cancelRaid, uncancelRaid, getLastRaids, raidLotengo, raidEscapou, searchTimezone, getActiveRaidsforUser, getGrupoRaid, getCurrentValidation, saveValidation, getUserByTrainername, getUserByUsername, getActiveRaidsforGroup, getGroupsByUser, getGroupUserStats, getRanking, getRemovedAlerts, getCurrentGyms, getCachedRanking, saveCachedRanking, resetCachedRanking, isParticipatingRaid
-from supportmethods import is_admin, extract_update_info, delete_message_timed, send_message_timed, pokemonlist, egglist, iconthemes, update_message, update_raids_status, send_alerts, send_alerts_delayed, error_callback, ensure_escaped, warn_people, get_settings_keyboard, update_settings_message, update_settings_message_timed, get_keyboard, format_message, edit_check_private, edit_check_private_or_reply, delete_message, parse_time, parse_pokemon, extract_time, extract_day, format_text_day, format_text_pokemon, parse_profile_image, validation_pokemons, validation_names, update_validations_status, already_sent_location, auto_refloat, format_gym_emojis, fetch_gym_address, get_pokemons_keyboard, get_gyms_keyboard, get_zones_keyboard, get_times_keyboard, get_endtimes_keyboard, get_days_keyboard, format_text_creating, remove_incomplete_raids, send_edit_instructions, ranking_time_periods, auto_ranking, ranking_text, set_language, available_languages
+from supportmethods import is_admin, extract_update_info, delete_message_timed, send_message_timed, pokemonlist, egglist, iconthemes, update_message, update_raids_status, send_alerts, send_alerts_delayed, error_callback, ensure_escaped, warn_people, get_settings_keyboard, update_settings_message, update_settings_message_timed, get_keyboard, format_message, edit_check_private, edit_check_private_or_reply, delete_message, parse_time, parse_pokemon, extract_time, extract_day, format_text_day, format_text_pokemon, parse_profile_image, validation_pokemons, validation_names, update_validations_status, already_sent_location, auto_refloat, format_gym_emojis, fetch_gym_address, get_pokemons_keyboard, get_gyms_keyboard, get_zones_keyboard, get_times_keyboard, get_endtimes_keyboard, get_days_keyboard, format_text_creating, remove_incomplete_raids, send_edit_instructions, ranking_time_periods, auto_ranking, ranking_text, set_language, available_languages, localized_pokemon
 from alerts import alertscmd, addalertcmd, clearalertscmd, delalertcmd, processLocation
 
 def cleanup(signum, frame):
@@ -159,7 +159,7 @@ def registercmd(bot, update):
 
     pokemons = random.sample(validation_pokemons,2 )
     name = random.choice(validation_names)
-    validation = { "usuario_id": chat_id, "step": "waitingtrainername", "pokemon": pokemons[0], "pokemon2": pokemons[1], "pokemonname": name }
+    validation = { "usuario_id": chat_id, "step": "waitingtrainername", "pokemon": pokemons[0], "pokemon2": pokemons[1], "pokemonname": _(name) }
     saveValidation(validation)
 
     bot.sendMessage(chat_id=chat_id, text=_("¿Cómo es el nombre de entrenador que aparece en tu perfil del juego?\n\n_Acabas de iniciar el proceso de validación. Debes completarlo antes de 6 horas, o caducará. Si te equivocas y deseas volver a empezar, debes esperar esas 6 horas._"), parse_mode=telegram.ParseMode.MARKDOWN)
@@ -522,7 +522,7 @@ def processMessage(bot, update):
                         validation["trainername"] = text
                         validation["step"] = "waitingscreenshot"
                         saveValidation(validation)
-                        bot.sendMessage(chat_id=chat_id, text=_("Así que tu nombre de entrenador es *{0}*.\n\nPara completar el registro, debes enviarme una captura de pantalla de tu perfil del juego, con un *{1}* o un *{2}* como compañero y que tengan de nombre *{3}*. Si no tienes ninguno de esos pokémon, o no te apetece cambiar ahora de compañero, puedes volver a comenzar el registro en cualquier otro momento después de que caduque.").format(validation["trainername"], validation["pokemon"].capitalize(), validation["pokemon2"].capitalize(),validation["pokemonname"]), parse_mode=telegram.ParseMode.MARKDOWN)
+                        bot.sendMessage(chat_id=chat_id, text=_("Así que tu nombre de entrenador es *{0}*.\n\nPara completar el registro, debes enviarme una captura de pantalla de tu perfil del juego, con un *{1}* o un *{2}* como compañero y que tengan de nombre *{3}*. Si no tienes ninguno de esos pokémon, o no te apetece cambiar ahora de compañero, puedes volver a comenzar el registro en cualquier otro momento después de que caduque.").format(validation["trainername"], _(validation["pokemon"]).capitalize(), _(validation["pokemon2"]).capitalize(), validation["pokemonname"]), parse_mode=telegram.ParseMode.MARKDOWN)
                     else:
                         bot.sendMessage(chat_id=chat_id, text=_("❌ Ese nombre de entrenador ya está asociado a otra cuenta de Telegram. Si realmente es tuyo, envía un correo a `{0}` indicando tu alias de Telegram y tu nombre de entrenador para que revisemos el caso manualmente.\n\nSi lo has escrito mal y realmente no era ese el nombre, dime entonces, ¿cómo es el nombre de entrenador que aparece en tu perfil del juego?").format(config["telegram"]["validationsmail"]), parse_mode=telegram.ParseMode.MARKDOWN)
                         return
@@ -575,7 +575,7 @@ def processMessage(bot, update):
                 validation["team"] = chosen_color
                 validation["step"] = "completed"
                 saveValidation(validation)
-                output = _("👌 Has completado el proceso de validación correctamente. Se te ha asignado el equipo *{0}* y el nivel *{1}*.\n\nA partir de ahora aparecerán tu nivel y equipo reflejados en las incursiones en las que participes.\n\nSi subes de nivel en el juego y quieres que se refleje en las incursiones, puedes enviarme en cualquier momento otra captura de tu perfil del juego, no es necesario que cambies tu Pokémon acompañante.").format(validation["team"], validation["level"])
+                output = _("👌 Has completado el proceso de validación correctamente. Se te ha asignado el equipo *{0}* y el nivel *{1}*.\n\nA partir de ahora aparecerán tu nivel y equipo reflejados en las incursiones en las que participes.\n\nSi subes de nivel en el juego y quieres que se refleje en las incursiones, puedes enviarme en cualquier momento otra captura de tu perfil del juego, no es necesario que cambies tu Pokémon acompañante.").format(_(validation["team"]), validation["level"])
                 bot.sendMessage(chat_id=chat_id, text=output,parse_mode=telegram.ParseMode.MARKDOWN)
             elif validation["step"] == "failed":
                 output = _("❌ Has excedido el número máximo de intentos para esta validación. Debes esperar a que caduque la validación actual para volver a intentarlo. También puedes enviar un correo a `{0}` indicando tu alias de Telegram y tu nombre de entrenador para que revisemos el caso manualmente.").format(config["telegram"]["validationsmail"])
@@ -1148,7 +1148,7 @@ def raidcmd(bot, update, args=None):
 
     currgyms = getCurrentGyms(chat_id)
     if (len(args) == 0 or args == None) and len(currgyms) >= 2 and group["locations"] == 1:
-        keyboard = get_pokemons_keyboard(langfunc=_)
+        keyboard = get_pokemons_keyboard(langfunc=_, lang=group["language"])
         if chat_type != "channel":
             creating_text = format_text_creating(thisuser, langfunc=_)
         else:
@@ -1181,11 +1181,11 @@ def raidcmd(bot, update, args=None):
     if args[0].lower() == "de":
         del args[0]
 
-    if args[0].lower() == "nivel" and args[1] in ["1","2","3","4","5"]:
+    if args[0].lower() in ["nivel","level","lvl","tier"] and args[1] in ["1","2","3","4","5"]:
         del args[0]
         args[0] = "N%s" % args[0]
 
-    if args[0].lower() == "legendaria":
+    if args[0].lower() in ["legendaria","legendary"]:
         args[0] = "N5"
 
     (current_raid["pokemon"], current_raid["egg"]) = parse_pokemon(args[0])
@@ -1513,7 +1513,7 @@ def unlistcmd(bot, update, args=None):
     if raid is None:
         return
 
-    group = getGroup(chat_id)
+    group = getGroup(raid["grupo_id"])
     if thisuser is not None:
         _ = set_language(thisuser["language"])
     else:
@@ -1945,7 +1945,7 @@ def pokemoncmd(bot, update, args=None):
     if raid is None:
         return
 
-    group = getGroup(chat_id)
+    group = getGroup(raid["grupo_id"])
     if thisuser is not None:
         _ = set_language(thisuser["language"])
     else:
@@ -1981,8 +1981,8 @@ def pokemoncmd(bot, update, args=None):
                     saveRaid(raid)
                     reply_markup = get_keyboard(raid)
                     update_message(raid["grupo_id"], raid["message"], reply_markup, bot)
-                    what_text = format_text_pokemon(raid["pokemon"], raid["egg"], langfunc=_)
                     if user_id is not None:
+                        what_text = format_text_pokemon(raid["pokemon"], raid["egg"], langfunc=_, lang=thisuser["language"])
                         bot.sendMessage(chat_id=user_id, text=_("👌 ¡Se ha cambiado el Pokémon/nivel de la incursión `{0}` a incursión {1} correctamente!").format(raid["id"], what_text), parse_mode=telegram.ParseMode.MARKDOWN)
                     warn_people("pokemon", raid, thisuser, user_id, bot)
                 else:
@@ -2193,7 +2193,7 @@ def raidbutton(bot, update):
             else:
                 return
             saveRaid(raid)
-            text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_)
+            text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_, lang=group["language"])
             creating_text = format_text_creating(thisuser, langfunc=_)
             if raid["egg"] != "EX":
                 reply_markup = get_times_keyboard(group["timezone"], langfunc=_)
@@ -2209,7 +2209,7 @@ def raidbutton(bot, update):
             m2 = re.match("^iraid_date_[0-9]{1,2}/00:([0-9]{1,2})$", data)
             time_offset = False if m2.group(1) == "00" else True
             reply_markup = get_times_keyboard(group["timezone"], date=raid["timeraid"], offset=time_offset, langfunc=_)
-            text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_)
+            text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_, lang=group["language"])
             creating_text = format_text_creating(thisuser, langfunc=_)
             text_day = format_text_day(raid["timeraid"], group["timezone"], "html", langfunc=_)
             if text_day != "":
@@ -2222,7 +2222,7 @@ def raidbutton(bot, update):
             raid["timeraid"] = parse_time(m.group(1), group["timezone"])
             saveRaid(raid)
             reply_markup = get_gyms_keyboard(group["id"], langfunc=_)
-            text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_)
+            text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_, lang=group["language"])
             creating_text = format_text_creating(thisuser, langfunc=_)
             text_day = format_text_day(raid["timeraid"], group["timezone"], "html", langfunc=_)
             if text_day != "":
@@ -2242,7 +2242,7 @@ def raidbutton(bot, update):
             saveRaid(raid)
             gyms_ordering = "alphabetical" if group["raidcommandorder"] == 0 else "activity"
             reply_markup = get_gyms_keyboard(group["id"], 0, m.group(1), order=gyms_ordering, langfunc=_)
-            text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_)
+            text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_, lang=group["language"])
             creating_text = format_text_creating(thisuser, langfunc=_)
             text_day = format_text_day(raid["timeraid"], group["timezone"], "html", langfunc=_)
             if text_day != "":
@@ -2254,7 +2254,7 @@ def raidbutton(bot, update):
             m = re.match("^iraid_gyms_page([1-9])$", data)
             gyms_ordering = "alphabetical" if group["raidcommandorder"] == 0 else "activity"
             reply_markup = get_gyms_keyboard(group["id"], page=int(m.group(1))-1, zone=raid["gimnasio_text"], order=gyms_ordering, langfunc=_)
-            text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_)
+            text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_, lang=group["language"])
             creating_text = format_text_creating(thisuser, langfunc=_)
             text_day = format_text_day(raid["timeraid"], group["timezone"], "html", langfunc=_)
             if text_day != "":
@@ -2268,7 +2268,7 @@ def raidbutton(bot, update):
             raid["gimnasio_id"] = gym["id"]
             raid["gimnasio_text"] = gym["desc"]
             saveRaid(raid)
-            text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_)
+            text_pokemon = format_text_pokemon(raid["pokemon"], raid["egg"], "html", langfunc=_, lang=group["language"])
             creating_text = format_text_creating(thisuser, langfunc=_)
             text_day = format_text_day(raid["timeraid"], group["timezone"], "html", langfunc=_)
             if text_day != "":
